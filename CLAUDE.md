@@ -73,6 +73,9 @@ Handles metadata, schema markup, alt text, and SEO optimization.
 Joy — Internationalisation (i18n) Specialist
 Adds multilingual support, language switcher UI, and translated content. During architecture planning, Joy must ask which languages the website should support before proceeding.
 
+Layla — Full Stack Developer
+Builds centralized internal systems: (1) Phone Number Manager — CRUD admin for managing multiple phone numbers per website/product/location, with random rotation on WhatsApp button clicks; (2) Blog CMS — login-protected writing interface for blog writers, centralized across all websites. Both systems connect to the shared Supabase instance.
+
 
 # Agent Workflow
 
@@ -136,18 +139,24 @@ Each page must include:
 
 Phone numbers are stored in Supabase.
 
+Multiple phone numbers can exist per website+product+location combination. One is selected at random each time a user clicks a WhatsApp button.
+
 Phone numbers must be mapped to:
 
 - website
 - product
 - location
 
-Example query logic:
+Example query logic (fetch all active numbers, pick one at random in code):
 
 select phone_number
 from phone_numbers
-where product_slug = 'cpap-machine'
+where website = 'oxihome.my'
+and product_slug = 'oxygen-machine'
 and location_slug = 'kuala-lumpur'
+and is_active = true
+
+Blog posts are also stored in Supabase, scoped by website, and managed through the centralized Blog CMS (built by Layla).
 
 
 # Frontend Website Rules

@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand palette — deep ocean teal + warm orange accent */
+  --brand-primary:    #0B6B82;
+  --brand-primary-lt: #15A0C0;
+  --brand-primary-xs: #E0F4F9;
+  --brand-accent:     #E8692A;
+  --brand-accent-lt:  #FFF0E8;
+  --brand-dark:       #0A2535;
+  --brand-dark-mid:   #0D3347;
+  --brand-text:       #152533;
+  --brand-text-muted: #5E7A8C;
+  --brand-border:     #D2E8EE;
+  --brand-surface:    #F4FAFB;
+  --brand-white:      #FFFFFF;
+  --wa-green:         #25D366;
+
+  /* Fonts */
+  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-body:    var(--font-inter), system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+h1, h3, h4 { font-weight: 700; }
+h2 { font-weight: 600; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: var(--brand-text);
+  background: var(--brand-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hero floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-10px) rotate(0.5deg); }
+  66%       { transform: translateY(-5px) rotate(-0.5deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Orb pulse */
+@keyframes orb-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%       { opacity: 0.65; transform: scale(1.06); }
+}
+
+.animate-orb {
+  animation: orb-pulse 4s ease-in-out infinite;
+}
+
+.animate-orb-slow {
+  animation: orb-pulse 6s ease-in-out infinite;
+}
+
+/* Ring spin */
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-ring {
+  animation: ring-spin 20s linear infinite;
+}
+
+/* Dot float */
+@keyframes dot-drift {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%       { transform: translateY(-8px); opacity: 1; }
+}
+
+.animate-dot { animation: dot-drift 3s ease-in-out infinite; }
+.animate-dot-2 { animation: dot-drift 4s ease-in-out infinite 1s; }
+.animate-dot-3 { animation: dot-drift 3.5s ease-in-out infinite 0.5s; }
+
+/* Infinite marquee scroll */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee-left var(--marquee-duration, 45s) linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Hover state helpers using CSS vars */
+.nav-link {
+  color: var(--brand-text-muted);
+  transition: color 0.15s;
+}
+.nav-link:hover, .nav-link:focus { color: var(--brand-primary); }
+
+.location-link {
+  color: var(--brand-text);
+  border-color: var(--brand-border);
+  transition: border-color 0.15s, color 0.15s, transform 0.15s;
+}
+.location-link:hover, .location-link:focus {
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  transform: translateY(-2px);
+}

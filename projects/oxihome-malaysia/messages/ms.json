@@ -1,0 +1,191 @@
+{
+  "nav": {
+    "products": "Produk",
+    "locations": "Lokasi",
+    "whatsapp": "WhatsApp Kami"
+  },
+  "home": {
+    "meta": {
+      "title": "Mesin Oksigen Malaysia | Sewa dari RM250/bln | Oxihome",
+      "description": "Sewa atau beli mesin oksigen di Malaysia dari RM250/bln. Penghantaran hari sama 4 jam. Oxygen concentrator, tangki kecemasan & oximeter. WhatsApp kami.",
+      "ogImageAlt": "Oxihome Malaysia — Sewa dan Beli Mesin Oksigen"
+    },
+    "hero": {
+      "h1": "Mesin Oksigen Malaysia",
+      "sub": "Sewa atau beli mesin oksigen dan kami hantar ke depan pintu anda dalam 4 jam. Dari RM250/bulan — tiada deposit, tiada kerumitan.",
+      "cta": "WhatsApp Kami Sekarang"
+    },
+    "stats": {
+      "locations": "127 lokasi seluruh Malaysia",
+      "delivery": "Penghantaran hari sama 4 jam",
+      "price": "Dari RM250/bulan",
+      "purity": "96% oksigen gred perubatan"
+    },
+    "risk": {
+      "h2": "Jangan Tunggu Sehingga Kecemasan",
+      "p1": "Apabila orang tersayang sukar bernafas, setiap minit sangat penting. Oksigen hospital mahal, waktu menunggu lama, dan menyewa dari pembekal tradisional sering memerlukan 3–5 hari dengan kontrak yang mengelirukan.",
+      "p2": "Ramai keluarga hanya sedar mereka memerlukan mesin oksigen rumah selepas keluar hospital — tergesa-gesa, tertekan, dan tidak tahu di mana untuk memulakan. Tanpa oxygen concentrator yang boleh dipercayai di rumah, pemulihan menjadi lambat.",
+      "p3": "Oxihome hadir untuk menyelesaikan masalah ini. Kami menghantar mesin oksigen ke seluruh Malaysia dalam 4 jam supaya keluarga anda mendapat sokongan yang diperlukan — hari ini, bukan minggu depan."
+    },
+    "products": {
+      "h2": "Sewa atau Beli Mesin Oksigen Anda"
+    },
+    "how": {
+      "h2": "Dapatkan Mesin Oksigen Anda dalam 3 Langkah Mudah",
+      "step1Title": "WhatsApp Kami",
+      "step1Desc": "Hantar mesej kepada kami melalui WhatsApp. Beritahu apa yang anda perlukan dan di mana anda berada. Kami balas dalam masa beberapa minit.",
+      "step2Title": "Pilih Pelan Anda",
+      "step2Desc": "Pilih sewa atau beli. Tiada deposit diperlukan untuk sewaan. Kami uruskan semuanya — tiada kertas kerja, tiada kontrak panjang.",
+      "step3Title": "Terima Dalam 4 Jam",
+      "step3Desc": "Pasukan kami menghantar mesin oksigen ke depan pintu anda pada hari yang sama. Kami pasang dan tunjukkan cara penggunaannya."
+    },
+    "reviews": {
+      "h2": "Dipercayai oleh Keluarga di Seluruh Malaysia",
+      "r1": "Bapa saya keluar hospital pada Jumaat malam. Saya WhatsApp Oxihome dan oxygen concentrator tiba dalam 3 jam. Penyelamat jiwa.",
+      "r1name": "Aisha R.",
+      "r1city": "Petaling Jaya",
+      "r2": "Kami bandingkan 4 pembekal. Oxihome satu-satunya yang boleh hantar hari sama. Mesin tu senyap dan ibu saya tidur lena malam ini.",
+      "r2name": "David Tan",
+      "r2city": "Kuala Lumpur",
+      "r3": "Sewa pakej combo jimatkan kami lebih RM500 berbanding beli berasingan. Oximeter percuma pun bonus yang bagus.",
+      "r3name": "Kavitha M.",
+      "r3city": "Shah Alam",
+      "r4": "Pasukan penghantaran tiba tepat masa dan pasang semua. Ibu saya bernafas dengan selesa dalam beberapa minit.",
+      "r4name": "Nurul H.",
+      "r4city": "Subang Jaya",
+      "r5": "Sewa selama 3 bulan selepas pembedahan ayah. Mudah untuk lanjutkan, tiada kertas kerja.",
+      "r5name": "James L.",
+      "r5city": "Pulau Pinang",
+      "r6": "Sangat berpatutan. Mesin beroperasi dengan senyap sepanjang malam.",
+      "r6name": "Siti N.",
+      "r6city": "Johor Bahru",
+      "r7": "Penghantaran hari sama menyelamatkan kami apabila ibu memerlukan oksigen segera tengah malam.",
+      "r7name": "Robert C.",
+      "r7city": "Kota Kinabalu",
+      "r8": "Balas WhatsApp pukul 11 malam, mesin dihantar pukul 8 pagi. Perkhidmatan luar biasa.",
+      "r8name": "Priya S.",
+      "r8city": "Ampang",
+      "r9": "Tiada deposit, tiada kontrak. Hanya palam dan bernafas. Tepat seperti yang kami perlukan.",
+      "r9name": "Ahmad F.",
+      "r9city": "Melaka"
+    },
+    "why": {
+      "h2": "Mengapa Keluarga Pilih Oxihome",
+      "p1": "Oxihome adalah pembekal peralatan oksigen rumah yang berdedikasi di Malaysia. Kami fokus pada satu perkara — mendapatkan mesin oksigen yang boleh dipercayai ke dalam rumah dengan pantas. Setiap unit diuji, dibersihkan, dan dihantar dengan semua yang anda perlukan untuk bermula segera.",
+      "p2": "Pasukan kami memahami kemendesakan ini. Sama ada anda memerlukan oxygen concentrator untuk pemulihan selepas pembedahan, pelan pengurusan COPD, atau tangki oksigen kecemasan untuk backup, kami menghantar ke 127 lokasi di Malaysia dalam 4 jam."
+    },
+    "locations": {
+      "h2": "Lokasi Yang Kami Hidangkan",
+      "sub": "Kami menghantar mesin oksigen ke 127 lokasi di seluruh Malaysia. Cari bandar anda di bawah dan WhatsApp kami untuk penghantaran hari sama.",
+      "linkPrefix": "Mesin Oksigen di"
+    },
+    "faq": {
+      "h2": "Soalan Lazim",
+      "q1": "Berapa kos untuk menyewa mesin oksigen di Malaysia?",
+      "a1": "Menyewa oxygen concentrator bermula dari RM250 sebulan. Ini termasuk mesin, nasal cannula, dan botol humidifier. Tiada deposit diperlukan — pulangkan bila-bila masa.",
+      "q2": "Adakah anda menawarkan penghantaran hari sama?",
+      "a2": "Ya. Oxihome menawarkan penghantaran hari sama 4 jam di 127 lokasi di Malaysia. WhatsApp kami alamat anda dan kami sahkan tetingkap penghantaran anda dengan segera.",
+      "q3": "Apa yang termasuk dalam sewaan?",
+      "a3": "Setiap sewaan termasuk OxiHome Mesin 5L oxygen concentrator, nasal cannula, dan botol humidifier. Pasukan kami menghantar, memasang, dan menunjukkan cara penggunaan mesin di rumah anda.",
+      "q4": "Adakah saya memerlukan preskripsi?",
+      "a4": "Tiada preskripsi diperlukan untuk menyewa atau membeli mesin oksigen dari Oxihome. Peralatan kami sesuai untuk kegunaan rumah dan sokongan kesihatan.",
+      "q5": "Apakah perbezaan antara oxygen concentrator dan tangki oksigen?",
+      "a5": "Oxygen concentrator menarik oksigen dari udara dan menghantar secara berterusan — ia tidak akan habis selagi ada kuasa elektrik. Tangki oksigen menyimpan bekalan mampatan tetap dan perlu diisi semula.",
+      "q6": "Bolehkah saya beli berbanding sewa?",
+      "a6": "Sudah tentu. Beli OxiHome Mesin 5L secara tunai pada harga RM2,599 — iaitu RM601 di bawah harga pasaran biasa RM3,200. Pelan ansuran RM279/bulan selama 10 bulan, tanpa kad kredit diperlukan.",
+      "q7": "Apa yang berlaku jika mesin rosak?",
+      "a7": "Jika mesin oksigen sewaan anda ada masalah, WhatsApp kami dan kami akan mengatur penghantaran penggantian pada hari yang sama. Anda tidak akan dibiarkan tanpa sokongan oksigen."
+    },
+    "cta": {
+      "h2": "Bernafas Lega — Mulakan Hari Ini",
+      "sub": "Keluarga anda layak mendapat sokongan oksigen yang boleh dipercayai tanpa harga hospital. Sewa mesin oksigen dari RM250/bulan dengan penghantaran hari sama ke depan pintu anda.",
+      "btn": "WhatsApp Kami Sekarang"
+    }
+  },
+  "location": {
+    "meta": {
+      "title": "Mesin Oksigen di {city} | Sewa dari RM250/bln | Oxihome",
+      "description": "Sewa atau beli mesin oksigen di {city} dari RM250/bln. Penghantaran 4 jam ke {city}. Oxygen concentrator, tangki kecemasan & oximeter. WhatsApp kami.",
+      "ogImageAlt": "Oxihome — Penghantaran Mesin Oksigen di {city}"
+    },
+    "breadcrumb": {
+      "home": "Utama",
+      "page": "Mesin Oksigen di {city}"
+    },
+    "hero": {
+      "h1": "Mesin Oksigen di {city}",
+      "sub": "Penghantaran hari sama 4 jam ke {city}. Sewa dari RM250/bulan — tiada deposit, tiada kontrak.",
+      "cta": "WhatsApp Kami di {city}"
+    },
+    "intro": "Mencari mesin oksigen di {city}? Oxihome menghantar oxygen concentrator, tangki kecemasan, dan oximeter terus ke pintu anda di {city} — dalam masa 4 jam selepas pesanan. Sewa dari RM250/bulan atau beli secara tunai tanpa yuran tersembunyi.",
+    "why": {
+      "h2": "Mengapa Pilih Oxihome di {city}",
+      "b1title": "Penghantaran 4 jam ke {city}",
+      "b1desc": "Pesan sebelum petang dan terima mesin oksigen anda pada hari yang sama. Tiada janji minggu depan.",
+      "b2title": "Pelan sewaan fleksibel",
+      "b2desc": "Sewa oxygen concentrator dari RM250/bulan tanpa deposit. Pulangkan bila-bila masa — tiada kontrak lock-in.",
+      "b3title": "Pemasangan lengkap disertakan",
+      "b3desc": "Pasukan penghantaran kami memasang mesin anda, memeriksa ia berfungsi, dan menerangkan cara penggunaan.",
+      "b4title": "Dipercayai di seluruh Malaysia",
+      "b4desc": "Kami melayani 127 lokasi di seluruh negara. Keluarga di {city} dan kawasan sekitarnya bergantung kepada Oxihome untuk peralatan oksigen yang cepat dan boleh dipercayai."
+    },
+    "faq": {
+      "h2": "Soalan Lazim — Mesin Oksigen di {city}",
+      "q1": "Berapa kos untuk menyewa mesin oksigen di {city}?",
+      "a1": "Menyewa oxygen concentrator di {city} bermula dari RM250 sebulan. Ini termasuk mesin, nasal cannula, dan botol humidifier. Tiada deposit diperlukan dan anda boleh memulangkan unit bila-bila masa.",
+      "q2": "Bolehkah saya mendapat penghantaran hari sama di {city}?",
+      "a2": "Ya. Oxihome menawarkan penghantaran hari sama 4 jam ke {city} dan kawasan sekitarnya. WhatsApp kami dengan alamat anda dan kami akan mengesahkan tetingkap penghantaran anda dengan segera.",
+      "q3": "Apa yang termasuk dalam sewaan mesin oksigen di {city}?",
+      "a3": "Setiap sewaan di {city} termasuk OxiHome Mesin 5L oxygen concentrator, nasal cannula, dan botol humidifier. Pasukan kami menghantar, memasang, dan menunjukkan cara penggunaan mesin di rumah anda.",
+      "q4": "Adakah saya memerlukan preskripsi untuk menyewa mesin oksigen di {city}?",
+      "a4": "Tiada preskripsi diperlukan untuk menyewa atau membeli mesin oksigen dari Oxihome di {city}. Peralatan kami sesuai untuk kegunaan rumah dan sokongan kesihatan.",
+      "q5": "Apa yang berlaku jika mesin rosak di {city}?",
+      "a5": "Jika mesin oksigen sewaan anda ada masalah, WhatsApp kami dan kami akan mengatur penghantaran penggantian ke {city} pada hari yang sama. Anda tidak akan dibiarkan tanpa sokongan oksigen."
+    },
+    "nearby": {
+      "h3": "Turut Melayani Kawasan Berdekatan",
+      "linkPrefix": "Mesin Oksigen di"
+    },
+    "cta": {
+      "h2": "Bersedia untuk Pesan di {city}?",
+      "sub": "Jangan tunggu kecemasan. Sewa atau beli mesin oksigen anda di {city} hari ini dan terima dalam masa 4 jam.",
+      "btn": "WhatsApp Kami Sekarang"
+    }
+  },
+  "products": {
+    "mesin5l": {
+      "name": "OxiHome Mesin 5L",
+      "desc": "Oksigen 96% tulen, senyap 45 dB. Nasal cannula dan humidifier disertakan."
+    },
+    "tangki": {
+      "name": "Tangki Oksigen Kecemasan",
+      "desc": "Tangki sandaran 10 liter. Kecil, sedia di sebelah katil bila diperlukan."
+    },
+    "combo": {
+      "name": "Pakej Combo Jimat",
+      "desc": "Concentrator + tangki kecemasan + oximeter percuma. Semua dalam satu pakej."
+    },
+    "oximeter": {
+      "name": "Pulse Oximeter",
+      "desc": "Ketepatan 99%. Jepit, baca, selesai. Penting untuk penjagaan pernafasan di rumah."
+    }
+  },
+  "common": {
+    "whatsappOrder": "WhatsApp untuk Pesan",
+    "rentFrom": "Sewa dari",
+    "buyAt": "Beli pada",
+    "installment": "Ansuran",
+    "freeOximeter": "Oximeter percuma disertakan",
+    "sameDayDelivery": "Penghantaran hari sama 4 jam",
+    "noDeposit": "Tiada deposit diperlukan",
+    "refill": "Isi semula"
+  },
+  "footer": {
+    "tagline": "Pembekal peralatan oksigen rumah Malaysia yang berdedikasi. Penghantaran hari sama 4 jam ke 127 lokasi.",
+    "whatsapp": "WhatsApp Kami",
+    "productsCol": "Produk",
+    "locationsCol": "Lokasi Utama",
+    "viewAll": "Lihat semua lokasi →",
+    "copyright": "Oxihome Malaysia. Hak cipta terpelihara."
+  }
+}
