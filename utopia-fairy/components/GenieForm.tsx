@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import FileUpload from './FileUpload'
+import MagicLoader from './MagicLoader'
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -63,6 +64,15 @@ export default function GenieForm() {
   const isDisabled = state === 'submitting' || state === 'success'
   const canSubmit = prompt.trim() && slug.trim() && state !== 'submitting'
 
+  // Show magical loading screen after successful submission
+  if (state === 'success') {
+    return (
+      <div style={{ width: '100%', maxWidth: 560 }}>
+        <MagicLoader projectPath={projectPath} slug={slug} prompt={prompt} onReset={reset} />
+      </div>
+    )
+  }
+
   return (
     <div style={{ width: '100%', maxWidth: 560, display: 'flex', flexDirection: 'column', gap: 14 }}>
       <textarea
@@ -70,6 +80,23 @@ export default function GenieForm() {
         className="fairy-input"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
+        onPaste={(e) => {
+          const items = e.clipboardData.items
+          const imageFiles: File[] = []
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+              const file = items[i].getAsFile()
+              if (file) {
+                const named = new File([file], `pasted-image-${Date.now()}.png`, { type: file.type })
+                imageFiles.push(named)
+              }
+            }
+          }
+          if (imageFiles.length > 0) {
+            e.preventDefault()
+            setFiles((prev) => [...prev, ...imageFiles])
+          }
+        }}
         placeholder="I want to create a website for renting wheelchairs in Malaysia. The brand is WheelCare, domain wheelcare.my. Target cities: KL, PJ, Shah Alam..."
         rows={4}
         style={{ minHeight: 120, resize: 'none' }}
@@ -88,50 +115,18 @@ export default function GenieForm() {
 
       <FileUpload files={files} onFilesChange={setFiles} />
 
-      {state === 'success' ? (
-        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 12, marginTop: 4 }}>
-          <div className="success-text">
-            ✦ Wish granted! Project created at <code className="success-code">{projectPath}</code>
-          </div>
-          <button
-            onClick={reset}
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--input-border)',
-              borderRadius: 12,
-              padding: '10px 24px',
-              color: 'var(--text-muted)',
-              fontSize: 14,
-              cursor: 'pointer',
-              fontFamily: 'var(--font-body)',
-              transition: 'border-color 0.3s, color 0.3s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--accent)'
-              e.currentTarget.style.color = 'var(--accent-fairy)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--input-border)'
-              e.currentTarget.style.color = 'var(--text-muted)'
-            }}
-          >
-            ✧ Make another wish
-          </button>
-        </div>
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
-          <button
-            className="fairy-btn"
-            onClick={handleSubmit}
-            disabled={!canSubmit}
-          >
-            {state === 'submitting' ? '✦ Casting spell...' : '✦ Grant My Wish'}
-          </button>
-          {state === 'error' && (
-            <div style={{ color: '#ef9a9a', fontSize: 13, textAlign: 'center' }}>{errorMsg}</div>
-          )}
-        </div>
-      )}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+        <button
+          className="fairy-btn"
+          onClick={handleSubmit}
+          disabled={!canSubmit}
+        >
+          {state === 'submitting' ? '✦ Casting spell...' : '✦ Grant My Wish'}
+        </button>
+        {state === 'error' && (
+          <div style={{ color: '#ef9a9a', fontSize: 13, textAlign: 'center' }}>{errorMsg}</div>
+        )}
+      </div>
     </div>
   )
 }
