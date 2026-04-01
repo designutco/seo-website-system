@@ -1,0 +1,196 @@
+{
+  "nav": {
+    "products": "Motorcycles",
+    "locations": "Locations",
+    "whatsapp": "WhatsApp Us"
+  },
+  "footer": {
+    "tagline": "Malaysia's trusted motorcycle rental service. Same-day delivery from RM30/day.",
+    "quickLinks": "Quick Links",
+    "topLocations": "Top Locations",
+    "copyright": "© {year} Sewa Motor Malaysia. All rights reserved.",
+    "home": "Home",
+    "products": "Motorcycles",
+    "locations": "All Locations"
+  },
+  "home": {
+    "meta": {
+      "title": "Sewa Motor Malaysia | #1 Motorcycle Rental from RM30/day | sewamotor.my",
+      "description": "Rent motorcycles across Malaysia from RM30/day. Honda Vario, Yamaha NMax, PCX & more. Same-day delivery. WhatsApp to book now. Sewa motor murah seluruh Malaysia."
+    },
+    "hero": {
+      "headline": "Motor Rental Malaysia — Sewa Motor from RM30/day",
+      "subheadline": "Rent reliable motorcycles delivered to your doorstep. Honda Vario, Yamaha NMax, PCX and more — daily, weekly, or monthly plans across Malaysia.",
+      "cta": "WhatsApp Us to Book Now"
+    },
+    "stats": {
+      "rentals": "6,000+ Rentals",
+      "rentalsDesc": "Trusted by riders across Malaysia",
+      "delivery": "Same-Day Delivery",
+      "deliveryDesc": "Book today, ride today",
+      "price": "From RM30/day",
+      "priceDesc": "Budget-friendly motorcycle rental",
+      "rating": "5-Star Rated",
+      "ratingDesc": "Highly reviewed on Google"
+    },
+    "risk": {
+      "heading": "Stuck Without a Ride? That Costs You More Than You Think.",
+      "paragraph1": "Getting around Malaysia without your own transport is expensive and frustrating. Grab rides add up fast — RM30 to RM50 per trip, multiple times a day. In a week, you could spend more on ride-hailing than renting a motorcycle for the entire month.",
+      "paragraph2": "Public transport does not cover every area, and waiting times eat into your day. If you are a student, a food delivery rider, or a tourist exploring Malaysia, you already know the struggle. You need a fast, affordable way to move around — on your own schedule.",
+      "paragraph3": "That is exactly why Sewa Motor Malaysia exists. Rent a motorcycle from RM30/day, get same-day delivery, and take back your freedom to move. No deposits drama, no long-term lock-ins."
+    },
+    "products": {
+      "heading": "Motorcycle Rental Malaysia — Choose Your Ride",
+      "cta": "Rent via WhatsApp",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "perDay": "/day",
+      "perWeek": "/week",
+      "perMonth": "/month",
+      "badgeMostPopular": "Most Popular",
+      "badgeBestValue": "Best Value",
+      "badgeBudgetPick": "Budget Pick",
+      "hondaVario160": {
+        "name": "Honda Vario 160",
+        "description": "Smooth automatic scooter — perfect for city commutes and food delivery.",
+        "daily": "RM50",
+        "weekly": "RM280",
+        "monthly": "RM900"
+      },
+      "yamahaNMax155": {
+        "name": "Yamaha NMax 155",
+        "description": "Premium ride with ABS braking — comfortable for long distances.",
+        "daily": "RM55",
+        "weekly": "RM310",
+        "monthly": "RM1,000"
+      },
+      "hondaPCX160": {
+        "name": "Honda PCX 160",
+        "description": "Top-tier scooter with smart key and smooth suspension. Great for daily riders.",
+        "daily": "RM60",
+        "weekly": "RM340",
+        "monthly": "RM1,100"
+      },
+      "hondaWave125": {
+        "name": "Honda Wave 125",
+        "description": "Fuel-efficient and easy to ride. The most affordable option for budget-conscious renters.",
+        "daily": "RM35",
+        "weekly": "RM200",
+        "monthly": "RM650"
+      },
+      "yamahaY15ZR": {
+        "name": "Yamaha Y15ZR",
+        "description": "Sporty underbones motorcycle — lightweight and fun to ride around town.",
+        "daily": "RM40",
+        "weekly": "RM230",
+        "monthly": "RM750"
+      },
+      "modenasKrissMR3": {
+        "name": "Modenas Kriss MR3",
+        "description": "Classic Malaysian motorcycle — reliable, low-maintenance, and starting from just RM30/day.",
+        "daily": "RM30",
+        "weekly": "RM170",
+        "monthly": "RM550"
+      }
+    },
+    "howItWorks": {
+      "heading": "Rent a Motorcycle in 3 Easy Steps",
+      "step1Title": "Choose Your Bike",
+      "step1Desc": "Browse our motorcycles above and pick the one that fits your needs and budget.",
+      "step2Title": "WhatsApp Us",
+      "step2Desc": "Send us a message on WhatsApp with your preferred bike, rental period, and delivery location.",
+      "step3Title": "Same-Day Delivery",
+      "step3Desc": "We deliver the motorcycle to your doorstep on the same day. Ride away."
+    },
+    "reviews": {
+      "heading": "What Our Customers Say About Sewa Motor Malaysia",
+      "review1": "Rented a Honda Vario 160 for a month and it was in perfect condition. Same-day delivery as promised. Will definitely rent again.",
+      "review1Author": "Ahmad R.",
+      "review1Location": "Petaling Jaya",
+      "review2": "I needed a motorbike urgently for food delivery work. Sewa Motor delivered a Yamaha Y15ZR to my place the same day I messaged them on WhatsApp. Very reliable.",
+      "review2Author": "Wei Liang C.",
+      "review2Location": "Kuala Lumpur",
+      "review3": "Budget-friendly and hassle-free. I rented the Modenas Kriss MR3 at RM30/day while my own bike was in the workshop. Great service and friendly team.",
+      "review3Author": "Priya S.",
+      "review3Location": "Shah Alam"
+    },
+    "authority": {
+      "heading": "Malaysia's Trusted Motorcycle Rental Service",
+      "paragraph1": "Sewa Motor Malaysia is built for riders who need a motorcycle fast — without the red tape. We maintain a fleet of well-serviced Honda, Yamaha, and Modenas motorcycles ready for same-day delivery across Malaysia. Every bike goes through a safety inspection before it reaches you.",
+      "paragraph2": "Whether you are a tourist exploring the country, a student commuting to campus, a delivery rider earning a living, or simply need a temporary replacement while your bike is in the workshop — we have the right motorcycle at the right price. Our team is local, responsive, and available on WhatsApp every day."
+    },
+    "locations": {
+      "heading": "Sewa Motor Near You — We Deliver Across Malaysia",
+      "subheading": "Select your city below to see motorcycle rental options with same-day delivery to your area."
+    },
+    "cta": {
+      "heading": "Ready to Ride? Rent a Motorcycle Today.",
+      "subheading": "From RM30/day with same-day delivery. Send us a WhatsApp message and we will get your bike to you today.",
+      "button": "WhatsApp Us Now"
+    }
+  },
+  "location": {
+    "meta": {
+      "title": "Sewa Motor {city} | Motorcycle Rental from RM30/day | sewamotor.my",
+      "description": "Rent motorcycles in {city} from RM30/day. Honda, Yamaha & Modenas — same-day delivery. WhatsApp to book your motorcycle rental in {city} today."
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "location": "{city}"
+    },
+    "hero": {
+      "headline": "Sewa Motor {city} — Rent Motorcycles from RM30/day",
+      "intro": "Looking for motorcycle rental in {city}? Sewa Motor Malaysia delivers motorcycles directly to your location in {city} — on the same day you book. Choose from Honda Vario, Yamaha NMax, Honda PCX, and more, with daily, weekly, and monthly rental plans starting from RM30/day."
+    },
+    "badges": {
+      "sameDayDelivery": "Same-Day Delivery to {city}",
+      "affordable": "From RM30/day",
+      "maintained": "Safety-Checked Fleet",
+      "localSupport": "Local {city} Support"
+    },
+    "whyChoose": {
+      "heading": "Why Choose Sewa Motor in {city}",
+      "delivery": "Same-day delivery to {city} — Book on WhatsApp, ride today. No waiting.",
+      "affordable": "Affordable rates from RM30/day — Daily, weekly, and monthly plans to fit your budget.",
+      "fleet": "Well-maintained fleet — Every motorcycle is safety-checked before delivery.",
+      "support": "Local support team — Our {city} team is available on WhatsApp for quick assistance."
+    },
+    "banner": {
+      "heading": "Motorcycle Rental in {city}",
+      "description": "Choose from 6 motorcycles available for rent in {city} with same-day delivery."
+    },
+    "nearby": {
+      "heading": "Nearby Locations",
+      "description": "Also available with same-day delivery near {city}."
+    },
+    "cta": {
+      "heading": "Ready to rent a motorcycle in {city}?",
+      "subheading": "Sewa Motor Malaysia offers same-day delivery straight to your door — starting from just RM30/day. Send us a WhatsApp message now and ride today.",
+      "button": "WhatsApp Us to Rent in {city}"
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions — Sewa Motor {city}",
+      "q1": "How much does it cost to rent a motorcycle in {city}?",
+      "a1": "Motorcycle rental in {city} starts from RM30/day for a Modenas Kriss MR3. Weekly and monthly plans are also available, with prices ranging up to RM1,100/month for a Honda PCX 160. The longer your rental period, the more you save per day.",
+      "q2": "Do you deliver motorcycles in {city}?",
+      "a2": "Yes, we provide same-day delivery across {city}. Just send us a WhatsApp message with your preferred motorcycle and delivery address, and we will bring it to you on the same day.",
+      "q3": "What motorcycles are available for rent in {city}?",
+      "a3": "We offer six models in {city}: Honda Vario 160, Yamaha NMax 155, Honda PCX 160, Honda Wave 125, Yamaha Y15ZR, and Modenas Kriss MR3. Each bike is maintained and ready for immediate rental.",
+      "q4": "Do I need a deposit to rent a motorcycle in {city}?",
+      "a4": "A small refundable deposit may be required depending on the motorcycle and rental duration. Contact us on WhatsApp for the exact deposit amount for your chosen bike in {city}.",
+      "q5": "Can I rent a motorcycle in {city} for food delivery work?",
+      "a5": "Absolutely. Many of our customers in {city} rent motorcycles for food delivery with Grab, Foodpanda, and ShopeeFood. The Honda Vario 160 and Yamaha Y15ZR are popular choices for delivery riders.",
+      "q6": "How do I book a motorcycle rental in {city}?",
+      "a6": "Booking is simple. Send us a WhatsApp message with your preferred bike, rental period, and delivery address in {city}. We will confirm availability and arrange same-day delivery.",
+      "q7": "Is there a minimum rental period in {city}?",
+      "a7": "The minimum rental period is one day. You can rent for a single day, a full week, or an entire month. Monthly plans in {city} offer the best value per day.",
+      "q8": "What happens if the motorcycle breaks down during my rental in {city}?",
+      "a8": "Contact us immediately on WhatsApp. We will arrange a replacement motorcycle or roadside assistance in {city} as quickly as possible. Your safety and convenience come first.",
+      "q9": "Can I extend my motorcycle rental in {city}?",
+      "a9": "Yes, you can extend your rental anytime. Just message us on WhatsApp before your current rental period ends, and we will update your booking for {city} without any interruption.",
+      "q10": "Do you offer scooter rental in {city}?",
+      "a10": "Yes. The Honda Vario 160, Yamaha NMax 155, and Honda PCX 160 are all automatic scooters available for rent in {city}. Scooter rental starts from RM50/day with same-day delivery."
+    }
+  }
+}
