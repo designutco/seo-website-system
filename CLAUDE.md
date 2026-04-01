@@ -61,20 +61,17 @@ Designs Supabase schema and database logic.
 Sora — SEO Strategist  
 Plans keyword structure, page hierarchy, and internal linking.
 
-Nana — SEO Copywriter  
-Writes website copy, product pages, and marketing content.
+Nana — Copywriter  
+Writes all website copy — homepage sections, location page copy for every target city, and meta copy.
 
-Fanny — Location Page Generator  
-Generates location-based SEO pages.
+Kagura — UI Design Specialist
+Reviews existing site layouts for duplicates, researches fresh design inspiration, and proposes a unique visual direction for each new project.
 
-Kimmy — Technical SEO Specialist
-Handles metadata, schema markup, alt text, and SEO optimization.
+Kimmy — Technical Implementation Specialist
+Implements metadata, schema markup, alt text, SEO optimization, full i18n (translations, routing, language switcher), and WhatsApp redirect lead tracking pages.
 
-Joy — Internationalisation (i18n) Specialist
-Adds multilingual support, language switcher UI, and translated content. During architecture planning, Joy must ask which languages the website should support before proceeding.
-
-Layla — Full Stack Developer
-Builds centralized internal systems: (1) Phone Number Manager — CRUD admin for managing multiple phone numbers per website/product/location, with random rotation on WhatsApp button clicks; (2) Blog CMS — login-protected writing interface for blog writers, centralized across all websites. Both systems connect to the shared Supabase instance.
+Layla — QA & Deployment Specialist
+Verifies phone number system integration with the shared database, pushes code to GitHub, and deploys to Vercel. Runs after user confirms the website design.
 
 
 # Agent Workflow
@@ -89,12 +86,14 @@ See `prompts/new-website.md` for the step-by-step new project workflow.
 
 ## Execution order
 
-1. Alpha — design system architecture
-   → Joy joins here: confirms target languages before architecture is finalised
+1. Alpha — design system architecture (confirms languages with user)
 2. Cyclops + Sora — run in parallel (both need Alpha's output)
-3. Nana — generate website copy (needs Sora's SEO plan)
-4. Fanny + Kimmy — run in parallel (both need Nana's copy)
-5. Joy — implement i18n (if multilingual; needs Alpha + Nana + confirmed languages)
+3. Nana — generate homepage + all location page copy (needs Alpha + Sora's output)
+4. Kagura + Kimmy — run in parallel (both need Nana's output)
+   Kagura — propose unique design direction (reviews existing sites, researches inspiration)
+   Kimmy — implement technical SEO + i18n + WhatsApp redirect
+   → user confirms design
+5. Layla — integration test → GitHub push → Vercel deploy
 
 
 # SEO Rules
@@ -156,7 +155,7 @@ and product_slug = 'oxygen-machine'
 and location_slug = 'kuala-lumpur'
 and is_active = true
 
-Blog posts are also stored in Supabase, scoped by website, and managed through the centralized Blog CMS (built by Layla).
+Blog posts are also stored in Supabase, scoped by website, and managed through the centralized Blog CMS (admin panel at `projects/admin/`).
 
 
 # Frontend Website Rules

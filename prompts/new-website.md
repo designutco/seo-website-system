@@ -33,6 +33,8 @@ projects/{project-slug}/
 
 Prompt: contents of `agents/alpha.md` + all inputs from Step 0.
 
+Alpha confirms languages with the user during this step.
+
 Wait for Alpha's architecture document before proceeding.
 
 Save output to: `projects/{project-slug}/architecture.md`
@@ -51,48 +53,46 @@ Save outputs to:
 - `projects/{project-slug}/database.md`
 - `projects/{project-slug}/seo-plan.md`
 
-## Step 4 — Spawn Nana (SEO Copywriter)
+## Step 4 — Spawn Nana (Copywriter)
 
-Needs: Sora's SEO plan + product description + brand tone.
+Needs: Alpha's architecture + Sora's SEO plan + product description + brand tone + full locations list + supported locales.
 
-Prompt: `agents/nana.md` + Sora's plan + product inputs.
+Nana writes both homepage copy and all location page copy in one pass.
 
-Save output to: `projects/{project-slug}/copy-homepage.md`
+Prompt: `agents/nana.md` + all inputs above.
 
-## Step 5 — Spawn Fanny + Kimmy in parallel
+Save outputs to:
+- `projects/{project-slug}/copy-homepage.md`
+- `projects/{project-slug}/copy-locations.md`
+
+## Step 5 — Spawn Kagura + Kimmy in parallel
 
 Both need Nana's output. Spawn simultaneously.
 
-**Fanny** (Location Page Generator):
-- Prompt: `agents/fanny.md` + Alpha's doc + Sora's plan + Nana's templates + locations list
+**Kagura** (UI Design Specialist):
+- Prompt: `agents/kagura.md` + Alpha's doc + Nana's homepage copy + brand assets + existing site screenshots + product type + target audience + reference images (if any)
 
-**Kimmy** (Technical SEO):
-- Prompt: `agents/kimmy.md` + Alpha's doc + Sora's plan + Nana's copy + domain
+**Kimmy** (Technical Implementation):
+- Prompt: `agents/kimmy.md` + Alpha's doc + Sora's plan + Nana's homepage copy + Nana's location copy + confirmed languages + domain + existing codebase state
 
 Save outputs to:
-- `projects/{project-slug}/copy-locations.md`
-- `projects/{project-slug}/technical-seo.md`
+- `projects/{project-slug}/design-direction.md`
+- `projects/{project-slug}/technical-seo-i18n.md`
 
-## Step 6 — Spawn Joy (i18n Specialist) — if multilingual
-
-Only run if more than one language was confirmed in Step 0.
-
-Prompt: `agents/joy.md` + Alpha's doc + confirmed languages + Nana's English copy + current codebase state.
-
-Save output to: `projects/{project-slug}/i18n-implementation.md`
-
-## Step 7 — Apply outputs to codebase
+## Step 6 — Apply outputs to codebase
 
 Work through each agent's output document and implement it:
 
 1. **Cyclops** → Run schema SQL in Supabase → seed with test data
 2. **Alpha** → Scaffold Next.js folder structure
-3. **Nana** → Write homepage copy into `app/[locale]/page.tsx` and message files
-4. **Fanny** → Populate `lib/locationCopy.ts` with location templates
-5. **Kimmy** → Add `generateMetadata()`, schema JSON-LD, sitemap, robots.txt
-6. **Joy** → Write `i18n/routing.ts`, `i18n/request.ts`, `middleware.ts`, `messages/*.json`, `LanguageSwitcher.tsx`
+3. **Kagura** → Follow design direction when building frontend components and pages
+4. **Nana** → Write homepage copy into `app/[locale]/page.tsx` and message files
+5. **Nana** → Populate `lib/locationCopy.ts` with location page copy
+6. **Kimmy** → Add `generateMetadata()`, schema JSON-LD, sitemap, robots.txt
+7. **Kimmy** → Write `i18n/routing.ts`, `i18n/request.ts`, `middleware.ts`, `messages/*.json`, `LanguageSwitcher.tsx`
+8. **Kimmy** → Write `app/[locale]/redirect-whatsapp-1/page.tsx` + `RedirectClient.tsx`
 
-## Step 8 — Dev server + screenshot review
+## Step 7 — Dev server + screenshot review
 
 ```bash
 cd projects/{project-slug}
@@ -103,13 +103,25 @@ Screenshot: `node screenshot.mjs http://localhost:3000`
 
 Compare against reference images. Fix spacing, typography, color mismatches. Run at least 2 comparison rounds.
 
-## Step 9 — Deploy to Vercel
+## Step 8 — User confirms design
 
-After review passes:
-- Push to GitHub
-- Connect repo to Vercel
-- Set environment variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- Deploy
+Present the website to the user. Do not proceed until the user confirms:
+- Website structure is correct
+- Layout matches expectations
+- Design and styling are approved
+
+## Step 9 — Spawn Layla (QA & Deploy)
+
+Only run after user confirms the design in Step 8.
+
+**Layla** (QA & Deployment Specialist):
+- Prompt: `agents/layla.md` + completed project + Supabase credentials + GitHub repo URL + Vercel details
+
+Layla will:
+1. Verify phone number system is connected and working
+2. Push code to GitHub
+3. Deploy to Vercel
+4. Report the live URL
 
 ## Reusing this system for a new product
 
