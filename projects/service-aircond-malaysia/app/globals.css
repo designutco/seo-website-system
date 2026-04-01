@@ -1,31 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap');
-
 @import "tailwindcss";
 
 :root {
-  --brand-orange:       #E8732A;
-  --brand-orange-light: #F9A96A;
-  --brand-orange-xs:    #FEF3EB;
   --brand-navy:         #1B3A5C;
   --brand-navy-mid:     #2A5280;
-  --brand-sky:          #7EC8E3;
-  --brand-sky-xs:       #EDF8FC;
-  --brand-cream:        #FFFAF5;
+  --brand-blue-light:   #A1D1FF;
+  --brand-blue-xs:      #EBF4FF;
+  --brand-yellow:       #FFE500;
+  --brand-yellow-dark:  #D4BF00;
+  --brand-yellow-xs:    #FFFCE6;
+  --brand-cream:        #F8FAFF;
   --brand-text:         #1C2B3A;
-  --brand-text-muted:   #607080;
-  --brand-border:       #E2EBF0;
+  --brand-text-muted:   #5A6B7D;
+  --brand-border:       #DEEAF2;
   --wa-green:           #25D366;
+  --google-gold:        #FBBC04;
 
-  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font: 'Inter', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--font-body);
+  font-family: var(--font);
   color: var(--brand-text);
   background: var(--brand-cream);
   -webkit-font-smoothing: antialiased;
@@ -34,70 +31,37 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  line-height: 1.15;
+  font-family: var(--font);
+  line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-/* ── Dot texture for cream sections ── */
 .dot-texture {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='2' cy='2' r='1.2' fill='%231B3A5C' fill-opacity='0.07'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='2' cy='2' r='1.2' fill='%231B3A5C' fill-opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* ── Hero gradient ── */
-.hero-gradient {
-  background: linear-gradient(135deg, #1B3A5C 0%, #2A5280 40%, #3D6B4F 70%, #E8732A 120%);
-}
-
-/* ── WhatsApp pulse glow ── */
 @keyframes wa-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 0 0 rgba(37, 211, 102, 0.5),
-      0 4px 20px rgba(37, 211, 102, 0.3);
-  }
-  50% {
-    box-shadow:
-      0 0 0 8px rgba(37, 211, 102, 0),
-      0 4px 20px rgba(37, 211, 102, 0.5);
-  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5), 0 4px 20px rgba(37,211,102,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(37,211,102,0), 0 4px 20px rgba(37,211,102,0.5); }
 }
+.wa-btn { animation: wa-pulse 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .wa-btn { animation: none; } }
 
-.wa-btn {
-  animation: wa-pulse 2.4s ease-in-out infinite;
-}
+.stat-number { font-weight: 800; color: var(--brand-yellow); letter-spacing: -0.03em; }
 
-@media (prefers-reduced-motion: reduce) {
-  .wa-btn { animation: none; }
-}
-
-/* ── Stat counter glow ── */
-.stat-number {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  color: var(--brand-orange);
-  letter-spacing: -0.03em;
-}
-
-/* ── Service card ── */
 .service-card {
   background: #fff;
-  border-radius: 20px;
-  border-left: 4px solid var(--brand-orange);
-  box-shadow:
-    0 2px 8px rgba(27, 58, 92, 0.06),
-    0 8px 24px rgba(27, 58, 92, 0.08);
+  border-radius: 16px;
+  border-left: 4px solid var(--brand-navy);
+  box-shadow: 0 2px 8px rgba(27,58,92,0.06), 0 8px 24px rgba(27,58,92,0.08);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
+  overflow: hidden;
 }
-
 .service-card:hover {
   transform: translateY(-4px);
-  box-shadow:
-    0 4px 16px rgba(27, 58, 92, 0.1),
-    0 16px 40px rgba(27, 58, 92, 0.14);
+  box-shadow: 0 4px 16px rgba(27,58,92,0.1), 0 16px 40px rgba(27,58,92,0.14);
 }
 
-/* ── Review card ── */
 .review-card {
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.12);
@@ -105,59 +69,49 @@ h1, h2, h3, h4, h5, h6 {
   backdrop-filter: blur(4px);
 }
 
-/* ── Nav link ── */
-.nav-link {
-  color: rgba(255,255,255,0.75);
-  transition: color 0.15s;
-}
+.nav-link { color: rgba(255,255,255,0.75); transition: color 0.15s; }
 .nav-link:hover, .nav-link:focus { color: #fff; }
 
-/* ── Location accordion ── */
-.accordion-panel {
-  overflow: hidden;
-  transition: max-height 0.35s ease;
-}
-
-/* ── Orange left accent for "why choose" ── */
-.why-item::before {
-  content: '';
-  display: block;
-  width: 4px;
-  height: 100%;
-  background: var(--brand-orange);
-  border-radius: 4px;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-.why-item {
-  position: relative;
-  padding-left: 16px;
-}
-
-/* ── Step connector line ── */
-.step-line::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--brand-orange), transparent);
-  transform: translateY(-50%);
-}
-
-/* ── Fade-in on scroll (JS adds .visible) ── */
 .fade-up {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 0; transform: translateY(24px);
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex; gap: 16px;
+  animation: marquee-scroll 40s linear infinite;
+  width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; flex-wrap: wrap; width: auto; } }
+
+.product-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--brand-border);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(27,58,92,0.12);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fade-up { opacity: 1; transform: none; transition: none; }
+/* ── FOMO urgency banner ── */
+@keyframes fomo-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
+.fomo-dot {
+  animation: fomo-pulse 1.5s ease-in-out infinite;
+}
+
+/* ── Hide scrollbar on overflow sections ── */
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }

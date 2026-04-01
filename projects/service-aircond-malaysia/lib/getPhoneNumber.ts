@@ -68,6 +68,10 @@ async function resolveWebsite(): Promise<string> {
  */
 export async function getPhoneNumber(locationSlug: string): Promise<PhoneResult> {
   try {
+    if (!supabase) {
+      return { phone: FALLBACK_PHONE, source: 'env-fallback' }
+    }
+
     const website = await resolveWebsite()
 
     // Single query: fetch both location-specific and global-pool rows together.

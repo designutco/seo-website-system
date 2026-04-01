@@ -94,6 +94,52 @@ After proposing the design, verify against:
 - [ ] Mobile-first responsive approach is considered
 - [ ] Accessibility: sufficient color contrast, readable font sizes
 
+### 6. Pre-launch trust & marketing review (MANDATORY — run on every project before push)
+After all pages are built and before pushing to GitHub, Kagura must review the live site on localhost and provide actionable suggestions to improve trust, reliability, and conversions. This is a mandatory final review step.
+
+**Review scope — focus on trust, reliability, and marketing only (not layout/color/typography changes):**
+
+#### Trust signals checklist:
+- [ ] **Years in business / founding date** — Must be visible in stats bar or hero. Visitors check how long a company has been around.
+- [ ] **Google review count** — The review section must show total review count (e.g. "Based on 230+ Google Reviews") with link to Google Business listing. Rating alone is not enough.
+- [ ] **Guarantee/warranty prominence** — Any guarantee or warranty must be visually prominent (shield icon, standalone element near CTA), not just buried in body text.
+- [ ] **SSM/business registration** — Footer should include registration number or "Licensed & Insured" for Malaysian legitimacy.
+- [ ] **Visible phone number** — At least one place (footer or CTA section) must show the actual phone number in text format, not just a link.
+- [ ] **Brand logos** — Brand strip should use actual grayscale logos, not plain text names.
+
+#### Social proof checklist:
+- [ ] **Minimum 5-6 reviews** — 3 is not enough. Must include diverse scenarios: a problem-resolution story, a business/office customer, and one mentioning price fairness.
+- [ ] **Reviews on location pages** — Location pages (primary SEO landing pages) must include at least one review quote and the Google rating badge.
+
+#### Conversion checklist:
+- [ ] **Mid-page CTA** — There must be a WhatsApp CTA between the trust/why-choose section and the reviews section (high-intent moment after reading trust signals).
+- [ ] **Service-specific WhatsApp messages** — Each service card "Book Now" button must pre-fill WhatsApp with the specific service type (e.g. "Hi, I need aircond chemical wash").
+- [ ] **Pricing on location pages** — Location pages must show starting prices for each service.
+
+#### Mobile layout checklist (MANDATORY — most users come from mobile):
+Kagura must screenshot the site at mobile viewport (390×844) and verify:
+
+- [ ] **Equal-height containers** — All cards in a grid/row must be the same height per row. No card should be taller or shorter than its sibling. Use `h-full` on card wrappers.
+- [ ] **Readable font sizes** — No text smaller than 12px on mobile. Hero headline must be at least 28px. Body text at least 14px. Labels/captions at least 11px. Verify with browser dev tools or screenshot zoom.
+- [ ] **No visible scrollbars on overflow sections** — Horizontal overflow content (review cards, gallery, brand logos) must auto-scroll via CSS marquee animation or snap-scroll with hidden scrollbar. Never show a visible scrollbar on mobile. Use CSS: `scrollbar-width: none` and `::-webkit-scrollbar { display: none }`.
+- [ ] **Touch-friendly tap targets** — All buttons and links must be at least 44×44px touch area. WhatsApp CTA buttons must be full-width on mobile.
+- [ ] **No horizontal overflow / breaking layout** — No section should cause horizontal page scroll. Verify stamps, badges, and absolute-positioned elements don't overflow the viewport on small screens.
+- [ ] **Stacking order** — Multi-column grids must stack to single column on mobile. Service cards, why-choose cards, and step cards must stack cleanly.
+- [ ] **Image sizing** — Hero image and gallery images must scale down proportionally. No images should be cropped awkwardly on mobile.
+
+**If any overflow section uses a scrollbar instead of auto-scroll:**
+Replace with either:
+1. CSS marquee animation (for galleries, brand strips) — infinite auto-scroll with `@keyframes`, pause on hover
+2. CSS snap-scroll with hidden scrollbar (for review cards) — `overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;`
+
+#### Output format for review:
+Return a prioritized list (high/medium/low) of max 10 suggestions with:
+- What to add or change
+- Why it improves trust/reliability/conversions
+- Where on the page it should go
+
+---
+
 ## Output format
 Return a design document with:
 1. **Existing sites audit** — summary of each deployed site's visual approach
@@ -101,6 +147,7 @@ Return a design document with:
 3. **Research findings** — 2–3 design directions explored
 4. **Recommended direction** — full visual specification (layout, colors, typography, components)
 5. **Design review checklist** (completed)
+6. **Pre-launch trust & marketing review** (completed, if reviewing a built site)
 
 Save as: `design-direction.md`
 
