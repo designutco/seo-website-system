@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import { supabase } from './supabase'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -36,12 +37,17 @@ function pickRandom<T>(arr: T[]): T | undefined {
 }
 
 /**
- * Resolve the effective website identifier.
- * Uses the WEBSITE constant to always match the database domain,
- * regardless of what domain the site is served from (e.g. Vercel preview URLs).
+ * Resolve the effective website identifier from the request host header.
+ * Falls back to the hardcoded constant so this works in tests / local dev
+ * where there is no live HTTP request.
  */
 async function resolveWebsite(): Promise<string> {
-  return WEBSITE
+  try {
+    const host = (await headers()).get('host')
+    return host ?? WEBSITE
+  } catch {
+    return WEBSITE
+  }
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
