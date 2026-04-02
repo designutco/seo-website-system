@@ -81,6 +81,35 @@ Return a status report with:
 
 ---
 
+### 4. WhatsApp redirect verification (MANDATORY — run on every project)
+After deployment, verify that ALL WhatsApp buttons route through the redirect page and return the correct phone number from the database.
+
+**Pre-deployment code check:**
+- [ ] Grep all `.tsx` files for `wa.me/` — must return ZERO matches (all links go through redirect page)
+- [ ] Grep all `.tsx` files for hardcoded phone constants (e.g. `WA_NUMBER`, `60123`) — must return ZERO matches
+- [ ] Verify `lib/supabase.ts` supports both `SUPABASE_` and `NEXT_PUBLIC_SUPABASE_` env var names
+
+**Vercel env var check:**
+- [ ] `NEXT_PUBLIC_SUPABASE_URL` is set for production
+- [ ] `NEXT_PUBLIC_SUPABASE_ANON_KEY` is set for production
+- [ ] `SUPABASE_URL` is set for production (same value, for server-side runtime)
+- [ ] `SUPABASE_ANON_KEY` is set for production (same value, for server-side runtime)
+
+**Post-deployment redirect test:**
+- [ ] `curl` the redirect page on the deployed URL and extract the `wa.me/{number}` from the HTML
+- [ ] Verify the number matches an active row in the database for that domain
+- [ ] Verify `product_slug` in the database matches the code constant exactly
+- [ ] If the number is wrong (e.g. shows fallback `60123456799`), check:
+  1. Are env vars set? (Supabase client might be null)
+  2. Does the `website` column match the actual domain the site is served from?
+  3. Does the `product_slug` column match the code constant?
+
+**Database row verification:**
+- [ ] Phone number rows exist for the Vercel deployment domain (e.g. `project-name.vercel.app`)
+- [ ] Phone number rows exist for the custom domain (e.g. `serviceaircond.my`)
+- [ ] At least one row with `location_slug = 'all'` exists (global fallback pool)
+- [ ] `product_slug` matches the code constant in `lib/getPhoneNumber.ts`
+
 ## Rules
 - Never deploy without user confirmation that the design is approved
 - Never push `.env`, `.env.local`, or any file containing secrets
@@ -88,3 +117,4 @@ Return a status report with:
 - If integration tests fail, report the issue and stop — do not push or deploy broken code
 - If the Vercel build fails, report the error and suggest fixes — do not retry blindly
 - Always report the final live URL back to the user
+- Always verify WhatsApp redirect works with real phone number AFTER deployment — never skip this step

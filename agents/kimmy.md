@@ -289,6 +289,60 @@ export default function RedirectClient({ url }: { url: string }) {
 - Update the default WhatsApp message text to match the product/brand
 - Style the fallback "Click here" link to match the brand colors
 
+### 16. WhatsApp CTA wiring (MANDATORY — zero hardcoded phone numbers)
+Every WhatsApp button on the entire site MUST route through the redirect page. **Never hardcode `wa.me/{number}` links anywhere.**
+
+**Implementation pattern:**
+```ts
+// Helper function — define once at module level, reuse everywhere
+function waRedirect(locale: string, message?: string, location?: string) {
+  const params = new URLSearchParams()
+  if (message) params.set('message', message)
+  if (location) params.set('location', location)
+  const qs = params.toString()
+  return `/${locale}/redirect-whatsapp-1${qs ? `?${qs}` : ''}`
+}
+
+// Inside component
+const WA_LINK = waRedirect(locale)
+const waServiceLink = (waKey: string) => waRedirect(locale, t(`services.${waKey}`))
+```
+
+**Where to apply:**
+- Nav header WhatsApp button → `waRedirect(locale)`
+- Hero CTA button → `waRedirect(locale)`
+- FOMO/urgency banner → `waRedirect(locale)` (component needs its own `useLocale()`)
+- Service card "Book Now" buttons → `waRedirect(locale, serviceMessage)`
+- Mid-page CTA → `waRedirect(locale)`
+- How It Works CTA → `waRedirect(locale)`
+- Final CTA section → `waRedirect(locale)`
+- Footer WhatsApp link → `waRedirect(locale)`
+- Location page CTA buttons → `waRedirect(locale, message, locationSlug)`
+
+**Redirect page must accept search params:**
+- `?message=` — pre-filled WhatsApp message (service-specific)
+- `?location=` — location slug for location-specific phone number lookup
+- Default: `location=all` (global phone pool), generic message
+
+**Checklist before handoff:**
+- [ ] Zero instances of `wa.me/` in any `.tsx` file (grep to verify)
+- [ ] Zero hardcoded phone number constants (`WA_NUMBER`, `PHONE`, etc.)
+- [ ] Every WhatsApp button uses `waRedirect()` helper
+- [ ] Components outside the main page component (e.g. FomoBanner) use `useLocale()` to get locale
+- [ ] Redirect page uses `force-dynamic` export
+
+### 17. Supabase client env var compatibility (MANDATORY)
+The `lib/supabase.ts` must support both `SUPABASE_` and `NEXT_PUBLIC_SUPABASE_` env var names. This ensures the client works in both build-time (NEXT_PUBLIC_) and server-side runtime (SUPABASE_) contexts on Vercel.
+
+```ts
+const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+const supabaseKey = process.env.SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+```
+
+Both pairs of env vars must be set in Vercel (production environment):
+- `NEXT_PUBLIC_SUPABASE_URL` + `SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` + `SUPABASE_ANON_KEY`
+
 ---
 
 ## Output format
