@@ -16,27 +16,8 @@ type Props = {
 export default async function RedirectWhatsAppPage({ searchParams }: Props) {
   const { location, message } = await searchParams
   const locationSlug = location ?? 'all'
-  const { phone, source } = await getPhoneNumber(locationSlug)
+  const { phone } = await getPhoneNumber(locationSlug)
   const url = waLink(phone, message ?? 'Hi, I need aircond service')
 
-  const { headers: h } = await import('next/headers')
-  let host = 'unknown'
-  try { host = (await h()).get('host') ?? 'null' } catch { host = 'error' }
-
-  const debugInfo = {
-    phone,
-    source,
-    locationSlug,
-    host,
-    hasSupabaseUrl: !!(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL),
-    hasSupabaseKey: !!(process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-  }
-
-  return (
-    <>
-      <RedirectClient url={url} />
-      {/* Temporary debug — remove after confirming */}
-      <script dangerouslySetInnerHTML={{ __html: `console.log('DEBUG:',${JSON.stringify(JSON.stringify(debugInfo))})` }} />
-    </>
-  )
+  return <RedirectClient url={url} />
 }
