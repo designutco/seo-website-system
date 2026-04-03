@@ -6,6 +6,6 @@ export const siteConfig = {
   domain,
   baseUrl: `https://${domain}`,
   siteUrl: `https://${domain}`,
-  fallbackPhone: '60123456789',
-  defaultWhatsApp: 'https://wa.me/60123456789',
+  fallbackPhone: '60174287801',
+  defaultWhatsApp: 'https://wa.me/60174287801',
 }
