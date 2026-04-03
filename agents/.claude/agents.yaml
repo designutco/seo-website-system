@@ -13,12 +13,16 @@ agents:
 
   - name: Nana
     role: copywriter
-    description: Writes SEO optimized website copy and product descriptions
+    description: Writes all website copy — homepage sections, location pages, and meta copy
 
-  - name: Fanny
-    role: location-page-generator
-    description: Generates programmatic SEO location pages
+  - name: Kagura
+    role: ui-design
+    description: Reviews existing sites for duplicate layouts, researches fresh design inspiration, and proposes a unique visual direction for each new project
 
   - name: Kimmy
-    role: technical-seo
-    description: Adds metadata, schema markup, and technical SEO improvements
+    role: technical-implementation
+    description: Implements metadata, schema markup, technical SEO, i18n (translations, routing, language switcher), and WhatsApp redirect lead tracking pages
+
+  - name: Layla
+    role: qa-deployment
+    description: Verifies phone number integration, pushes code to GitHub, and deploys to Vercel
