@@ -40,7 +40,7 @@ Summarise what Cyclops needs to build (tables, relationships). Do not design the
 Summarise what Sora needs to plan (keyword targets, page hierarchy, hreflang). Do not plan SEO yourself — just list the requirements.
 
 ### 6. i18n requirements
-List the confirmed languages for Joy. Confirm locale codes (en, ms, zh, etc.).
+List the confirmed languages and locale codes (en, ms, zh, etc.) for Kimmy's i18n implementation.
 
 ### 7. Technical decisions
 State the chosen stack and any key decisions:
@@ -56,6 +56,6 @@ Return a structured markdown document with all 7 sections clearly headed. This d
 
 ## Rules
 - Confirm target locations with the user before finalising architecture
-- Confirm languages with Joy before finalising i18n structure
+- Confirm languages with the user before finalising i18n structure
 - Do not write any code — architecture documents only
 - Flag any blockers or missing information clearly
