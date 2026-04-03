@@ -381,3 +381,47 @@ Save as: `technical-seo-i18n.md`
 - BM translations must be proper Bahasa Malaysia — not word-for-word English translations
 - WhatsApp is the only CTA — "WhatsApp Sekarang" (ms), "立即WhatsApp" (zh)
 - Delivery copy must be consistent across all locales: "4 jam" (ms), "4小时内" (zh)
+
+## Zero Hardcoded English Rule (MANDATORY)
+Every visible string on the website MUST go through the i18n translation system. Past mistakes to avoid:
+
+1. **FOMO/urgency banners**: These are often written as standalone components with hardcoded English. They MUST use `useTranslations()` for all text.
+2. **Stats bar values and labels**: Numbers and labels must come from translation files, not inline strings.
+3. **Section headings**: "Why Choose Us", "Real Rides", "Our Fleet", "Simple Process" etc. must all be translation keys.
+4. **CTA text**: "Ready to ride?", "WhatsApp us now", "Safety-checked fleet" — all must be i18n keys.
+5. **Sub-text**: "Free to ask · Reply within 1 hour", "Response within 1 hour · No hidden charges" — must be translated.
+6. **Review section**: "Based on 180+ Google Reviews", "Google Reviews" — must be i18n keys.
+
+**Create a `shared` namespace** in the translation files for text used on both homepage and location pages (stats, whyChoose, midCta, gallery, etc.).
+
+**Checklist before handoff:**
+- [ ] Grep all `.tsx` files for English text strings longer than 3 words — every match must use `t()` or `s()`
+- [ ] Switch to each non-English locale and verify no English text leaks through
+
+## Layout Parity Rule (MANDATORY)
+The homepage and location pages MUST have the identical section structure. The only difference is the copywriting (generic vs location-specific).
+
+**Both pages must have these sections in this exact order:**
+FOMO Banner → Nav → Hero → Stats → Products → How It Works → Risk/Problem → Mid CTA → Google Reviews → Why Choose → Gallery → Locations Accordion → FAQ → Final CTA → Footer
+
+**Location page extras (allowed):**
+- Breadcrumbs (between Nav and Hero)
+- Nearby Locations (between Locations Accordion and Final CTA)
+
+**Common mistakes to avoid:**
+- Omitting sections from location pages (How It Works, Risk, Gallery, Reviews, Locations are often forgotten)
+- Swapping section order between pages (e.g. Why Choose before Products on location but after on homepage)
+- Different padding/spacing values between pages (`py-16` vs `py-14`)
+- Different background colors for matching sections
+- Missing nav links on location page (must match homepage nav)
+- Missing footer links on location page (must match homepage footer)
+
+## Layout Ownership Rule (MANDATORY)
+The `app/[locale]/layout.tsx` must NOT contain header or footer components. Each page component owns its own header and footer inline. This prevents duplicate headers/footers when pages have their own navigation.
+
+**layout.tsx should only contain:**
+- `<html>`, `<body>` tags
+- `<NextIntlClientProvider>`
+- Schema markup (OrganizationSchema)
+- `generateMetadata()` and `generateStaticParams()`
+- `{children}` — nothing else
