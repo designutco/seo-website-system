@@ -136,6 +136,19 @@ Each page must include:
 
 # Supabase Database Logic
 
+## Shared Database
+
+All projects use a single shared Supabase database. Credentials are stored in `/.env.local` at the repo root and symlinked into each project. Each project's `next.config.ts` loads env from the repo root via `loadEnvConfig` from `@next/env`.
+
+**NEVER create a separate Supabase project per website.** All websites share the same database and are distinguished by the `website` column.
+
+When setting up a new project:
+1. Symlink the root `.env.local` into the project: `ln -sf ../../.env.local .env.local`
+2. Add `loadEnvConfig(process.cwd() + '/../..')` to the project's `next.config.ts`
+3. Add the same env vars to Vercel for production via `vercel env add`
+
+## Phone Numbers
+
 Phone numbers are stored in Supabase.
 
 Multiple phone numbers can exist per website+product+location combination. One is selected at random each time a user clicks a WhatsApp button.
@@ -154,6 +167,20 @@ where website = 'oxihome.my'
 and product_slug = 'oxygen-machine'
 and location_slug = 'kuala-lumpur'
 and is_active = true
+
+## Initial Phone Number Seeding
+
+When creating a new website project, always insert at least one phone number into the database so the WhatsApp CTA works immediately. Use the `all` location slug as a fallback number that works across all location pages.
+
+Example insert (run after the project is created):
+
+insert into phone_numbers (website, product_slug, location_slug, phone_number, is_active)
+values
+  ('newsite.my', 'default', 'all', '60123456789', true);
+
+The phone number should be provided by the user during project setup. If not provided, ask for it before deployment.
+
+## Blog Posts
 
 Blog posts are also stored in Supabase, scoped by website, and managed through the centralized Blog CMS (admin panel at `projects/admin/`).
 

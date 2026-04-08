@@ -1,0 +1,239 @@
+{
+  "metadata": {
+    "title": "Kerusi Roda Elektrik Malaysia | Sewa & Jualan | electric-wheelchair.com.my",
+    "description": "Sewa atau beli kerusi roda elektrik di Malaysia. Penghantaran hari sama. Bertauliah KKM. Sewa dari RM400/bulan atau beli dari RM2,400. WhatsApp kami sekarang."
+  },
+  "nav": {
+    "brandName": "Kerusi Roda Elektrik MY",
+    "products": "Produk",
+    "howItWorks": "Cara Pesanan",
+    "reviews": "Ulasan",
+    "locations": "Lokasi",
+    "faq": "Soalan Lazim",
+    "ctaButton": "WhatsApp Kami"
+  },
+  "fomoBanner": {
+    "texts": [
+      "🔥 Stok terhad — tinggal 3 unit di kawasan KL",
+      "⚡ Penghantaran hari sama tersedia hari ini",
+      "✅ 15 kerusi roda disewa minggu ini di Malaysia"
+    ],
+    "bookNow": "Tempah Sekarang"
+  },
+  "hero": {
+    "badge": "Paling Laris di Malaysia",
+    "h1": "Kerusi Roda Elektrik",
+    "h1Highlight": "Sewa & Jualan",
+    "h1Suffix": "di Malaysia",
+    "subheadline": "Ringan. Boleh dilipat. Berkuasa. Sewa dari RM400/bulan atau beli dari RM2,400. Penghantaran hari sama ke seluruh Malaysia.",
+    "ctaPrimary": "WhatsApp Kami Sekarang",
+    "ctaSecondary": "Lihat Produk",
+    "trustBadge": "Bertauliah KKM • Waranti 6 Bulan • 2,300+ Pelanggan"
+  },
+  "stats": {
+    "items": [
+      { "value": "2,300+", "label": "Pelanggan Dilayan" },
+      { "value": "Hari Sama", "label": "Penghantaran" },
+      { "value": "RM400", "label": "Sewa Bulanan" },
+      { "value": "4.9★", "label": "Rating Google" }
+    ]
+  },
+  "products": {
+    "heading": "Kerusi Roda Elektrik Kami",
+    "subheading": "Pilih sewa atau beli — semua model boleh dilipat, ringan, dan bertauliah KKM",
+    "items": {
+      "lightweight": {
+        "name": "Kerusi Roda Elektrik Ringan",
+        "description": "Sesuai untuk kegunaan harian dan perjalanan. Reka bentuk boleh dilipat muat dalam but kereta.",
+        "price": "Dari RM2,400",
+        "rental": "Sewa: RM400/bulan"
+      },
+      "reclining": {
+        "name": "Kerusi Roda Elektrik Rebah",
+        "description": "Boleh rebah sepenuhnya dengan sokongan kepala. Sesuai untuk keselesaan jangka panjang.",
+        "price": "Dari RM2,800",
+        "rental": "Sewa: RM450/bulan"
+      },
+      "heavyDuty": {
+        "name": "Kerusi Roda Elektrik Tugas Berat",
+        "description": "Menanggung sehingga 120kg. Rangka diperkukuh untuk pengguna lebih besar.",
+        "price": "Dari RM3,200",
+        "rental": "Sewa: RM500/bulan"
+      },
+      "travel": {
+        "name": "Kerusi Roda Elektrik Pelancongan",
+        "description": "Ultra-padat. Muat kabin kapal terbang. Sesuai untuk pelancong.",
+        "price": "Dari RM2,600",
+        "rental": "Sewa: RM420/bulan"
+      }
+    },
+    "cta": "Tanya Sekarang"
+  },
+  "howItWorks": {
+    "heading": "Cara Pesanan",
+    "subheading": "Dapatkan kerusi roda elektrik anda dalam 3 langkah mudah",
+    "steps": [
+      {
+        "title": "Hubungi Kami",
+        "description": "WhatsApp kami dengan keperluan anda. Kami akan syorkan kerusi roda terbaik untuk anda."
+      },
+      {
+        "title": "Pilih & Bayar",
+        "description": "Pilih sewa atau beli. Bayar melalui perbankan dalam talian. Tiada kad kredit diperlukan."
+      },
+      {
+        "title": "Dihantar!",
+        "description": "Penghantaran hari sama ke depan pintu anda. Pemasangan dan demonstrasi percuma disertakan."
+      }
+    ]
+  },
+  "risk": {
+    "heading": "Mengapa Anda Perlukan Kerusi Roda Elektrik",
+    "subheading": "Jangan biarkan cabaran mobiliti menghalang anda atau orang tersayang",
+    "points": [
+      "Penat menolak kerusi roda manual?",
+      "Bimbang tentang kebebasan ibu bapa yang sudah tua?",
+      "Perlukan kerusi roda untuk pemulihan selepas pembedahan?",
+      "Mencari penyelesaian mobiliti yang sesuai untuk perjalanan?"
+    ],
+    "solution": "Kerusi roda elektrik kami mengembalikan kebebasan — ringan, mudah dikawal, dan dihantar ke pintu anda.",
+    "cta": "Dapatkan Kerusi Roda Anda Hari Ini"
+  },
+  "midCta": {
+    "heading": "Sedia Untuk Dapatkan Semula Mobiliti Anda?",
+    "subheading": "WhatsApp kami sekarang untuk harga dan ketersediaan segera",
+    "cta": "WhatsApp Kami Sekarang"
+  },
+  "reviews": {
+    "heading": "Apa Kata Rakyat Malaysia",
+    "subheading": "Berdasarkan 230+ Ulasan Google",
+    "rating": "4.9",
+    "items": [
+      {
+        "name": "Ahmad bin Ismail",
+        "location": "Kuala Lumpur",
+        "text": "Saya menyewa kerusi roda elektrik untuk ayah selepas pembedahan pinggul. Penghantaran hari sama dan kerusi roda sangat mudah digunakan. Sangat disyorkan!",
+        "rating": 5
+      },
+      {
+        "name": "Susan Tan",
+        "location": "Petaling Jaya",
+        "text": "Beli model ringan untuk ibu saya. Dia sangat suka — mudah dilipat dan dimasukkan dalam kereta. Bateri tahan sepanjang hari. Pembelian yang bagus.",
+        "rating": 5
+      },
+      {
+        "name": "Rajesh Kumar",
+        "location": "Johor Bahru",
+        "text": "Pilihan sewa sangat bagus. RM400/bulan sangat berpatutan berbanding membeli. Pasukan mereka juga tunjukkan cara penggunaan. Perkhidmatan sangat profesional.",
+        "rating": 5
+      },
+      {
+        "name": "Fatimah binti Yusof",
+        "location": "Shah Alam",
+        "text": "Suami saya perlukan kerusi roda selepas strok. Kerusi roda elektrik ini mengubah hidupnya. Dia kini boleh bergerak sendiri. Terima kasih!",
+        "rating": 5
+      },
+      {
+        "name": "David Wong",
+        "location": "Pulau Pinang",
+        "text": "Pesanan untuk nenek saya. Model rebah sangat selesa untuknya. Penghantaran ke Pulau Pinang juga cepat. Akan syorkan kepada kawan-kawan.",
+        "rating": 5
+      },
+      {
+        "name": "Siti Aminah",
+        "location": "Ipoh",
+        "text": "Sangat berpuas hati dengan perkhidmatan. Kerusi roda tepat seperti yang diterangkan — ringan dan berkuasa. Ayah saya gunakan setiap hari. Harga pun berpatutan.",
+        "rating": 5
+      }
+    ]
+  },
+  "whyChoose": {
+    "heading": "Mengapa Pilih Kerusi Roda Elektrik Malaysia",
+    "items": [
+      {
+        "title": "Bertauliah KKM",
+        "description": "Semua kerusi roda kami diperakui oleh Kementerian Kesihatan Malaysia untuk keselamatan dan kualiti."
+      },
+      {
+        "title": "Penghantaran Hari Sama",
+        "description": "Pesan sebelum 2 petang dan terima kerusi roda anda pada hari yang sama di seluruh Semenanjung Malaysia."
+      },
+      {
+        "title": "Waranti 6 Bulan",
+        "description": "Setiap kerusi roda disertakan waranti 6 bulan meliputi motor, bateri, dan rangka."
+      },
+      {
+        "title": "Sewa Fleksibel",
+        "description": "Sewa dari RM400/bulan tanpa komitmen jangka panjang. Sesuai untuk tempoh pemulihan."
+      },
+      {
+        "title": "Pemasangan Percuma",
+        "description": "Kami hantar, pasang, dan tunjukkan cara penggunaan kerusi roda anda — semua percuma."
+      },
+      {
+        "title": "Pembaikan & Alat Ganti",
+        "description": "Perkhidmatan pembaikan penuh dan alat ganti asli tersedia. Kami servis semua jenama kerusi roda elektrik."
+      }
+    ]
+  },
+  "gallery": {
+    "heading": "Galeri Pelanggan",
+    "subheading": "Pelanggan sebenar menggunakan kerusi roda elektrik kami di seluruh Malaysia"
+  },
+  "locations": {
+    "heading": "Kami Menghantar Ke Seluruh Malaysia",
+    "subheading": "Penghantaran hari sama ke 80+ bandar di seluruh negara",
+    "viewAll": "Lihat Semua Lokasi"
+  },
+  "faq": {
+    "heading": "Soalan Lazim",
+    "items": [
+      {
+        "question": "Berapakah kos untuk menyewa kerusi roda elektrik di Malaysia?",
+        "answer": "Sewa kerusi roda elektrik kami bermula dari RM400 sebulan. Tiada kad kredit diperlukan — anda boleh bayar melalui perbankan dalam talian. Sewa termasuk penghantaran, pemasangan, dan demonstrasi cara penggunaan."
+      },
+      {
+        "question": "Bolehkah saya membeli kerusi roda elektrik?",
+        "answer": "Ya! Kerusi roda elektrik kami boleh dibeli bermula dari RM2,400. Semua pembelian disertakan waranti 6 bulan meliputi motor, bateri, dan rangka. Kami juga menawarkan pelan ansuran RM400/bulan selama 12 bulan."
+      },
+      {
+        "question": "Berapa cepat penghantaran?",
+        "answer": "Kami menawarkan penghantaran hari sama untuk pesanan sebelum 2 petang di Semenanjung Malaysia. Penghantaran ke Malaysia Timur (Sabah & Sarawak) mengambil masa 2-3 hari bekerja. Semua penghantaran termasuk pemasangan dan demonstrasi percuma."
+      },
+      {
+        "question": "Adakah kerusi roda elektrik anda bertauliah KKM?",
+        "answer": "Ya, semua kerusi roda elektrik kami diperakui oleh Kementerian Kesihatan Malaysia (KKM). Ini memastikan ia memenuhi standard keselamatan dan kualiti untuk alat mobiliti perubatan."
+      },
+      {
+        "question": "Adakah anda menawarkan perkhidmatan pembaikan kerusi roda?",
+        "answer": "Ya, kami menyediakan perkhidmatan pembaikan penuh untuk semua jenama kerusi roda elektrik. Kami menyimpan stok alat ganti asli termasuk bateri, motor, pengawal kayu bedik, dan tayar. Hubungi kami melalui WhatsApp untuk harga pembaikan."
+      },
+      {
+        "question": "Berapakah kapasiti berat kerusi roda elektrik anda?",
+        "answer": "Model ringan standard kami menanggung sehingga 100kg. Untuk pengguna lebih besar, model tugas berat kami menanggung sehingga 120kg dengan rangka keluli diperkukuh. Semua model boleh dilipat dan muat dalam kebanyakan but kereta."
+      }
+    ]
+  },
+  "finalCta": {
+    "heading": "Dapatkan Kerusi Roda Elektrik Anda Hari Ini",
+    "subheading": "Sewa dari RM400/bulan atau beli dari RM2,400. Penghantaran hari sama ke seluruh Malaysia.",
+    "cta": "WhatsApp Kami Sekarang",
+    "phone": "6010-888 9849"
+  },
+  "footer": {
+    "brandName": "Kerusi Roda Elektrik Malaysia",
+    "tagline": "Penyedia sewa dan jualan kerusi roda elektrik dipercayai di Malaysia.",
+    "quickLinks": "Pautan Pantas",
+    "contact": "Hubungi",
+    "copyright": "© 2026 Kerusi Roda Elektrik Malaysia. Hak cipta terpelihara.",
+    "ssm": "Perniagaan Berdaftar SSM"
+  },
+  "shared": {
+    "whatsappUs": "WhatsApp Kami",
+    "learnMore": "Ketahui Lebih Lanjut",
+    "viewAll": "Lihat Semua",
+    "freeDelivery": "Penghantaran Percuma",
+    "kkmCertified": "Bertauliah KKM",
+    "sixMonthWarranty": "Waranti 6 Bulan"
+  }
+}
