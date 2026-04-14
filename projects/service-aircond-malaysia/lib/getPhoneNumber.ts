@@ -1,135 +1,156 @@
-import { supabase } from './supabase'
+import { getSupabase } from './supabase'
+import { headers } from 'next/headers'
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+const FALLBACK_PHONE = '60123456799'
+const FALLBACK_WA_TEXT = 'Hi, saya berminat dengan servis aircond.'
 
-const WEBSITE       = 'service-aircond-malaysia.vercel.app'
-const PRODUCT_SLUG  = 'service-aircond'
-
-/**
- * Hard fallback used when Supabase is unreachable or returns no rows.
- * Override via PHONE_FALLBACK env var so ops can change it without a redeploy.
- */
-const FALLBACK_PHONE =
-  process.env.PHONE_FALLBACK ?? '60123456799'
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+type LeadsMode = 'single' | 'rotation' | 'location' | 'hybrid'
 
 interface PhoneRow {
   phone_number: string
+  whatsapp_text: string
+  percentage: number
+  label: string | null
   location_slug: string
 }
 
 export interface PhoneResult {
-  phone:  string
-  source: 'location' | 'global-pool' | 'env-fallback'
+  phone: string
+  whatsappText: string
+  source: 'database' | 'fallback'
+  mode: LeadsMode | 'fallback'
 }
 
-// ─── Core helpers ─────────────────────────────────────────────────────────────
+function pickWeighted(rows: PhoneRow[]): PhoneRow | undefined {
+  if (rows.length === 0) return undefined
+  if (rows.length === 1) return rows[0]
 
-/**
- * Pick one entry at random from an array.
- * Returns undefined on empty input — caller handles the fallback.
- */
-function pickRandom<T>(arr: T[]): T | undefined {
-  if (arr.length === 0) return undefined
-  return arr[Math.floor(Math.random() * arr.length)]
+  const totalWeight = rows.reduce((sum, r) => sum + (r.percentage || 1), 0)
+  let random = Math.random() * totalWeight
+
+  for (const row of rows) {
+    random -= row.percentage || 1
+    if (random <= 0) return row
+  }
+
+  return rows[0]
 }
 
-/**
- * Always use the canonical WEBSITE constant so DB lookups match regardless
- * of the request host (localhost, Vercel preview, custom domain, etc.).
- */
-async function resolveWebsite(): Promise<string> {
-  return WEBSITE
-}
-
-// ─── Main export ──────────────────────────────────────────────────────────────
-
-/**
- * Fetch a random active WhatsApp number for a given location.
- *
- * Fallback chain:
- *   1. Location-specific pool  (location_slug = locationSlug)
- *   2. Global site pool        (location_slug = 'all')
- *   3. PHONE_FALLBACK env var  (or hardcoded constant)
- *
- * This function never throws — it always returns a valid phone string.
- *
- * @param locationSlug  e.g. 'kuala-lumpur'
- */
-export async function getPhoneNumber(locationSlug: string): Promise<PhoneResult> {
+async function getHostDomain(): Promise<string> {
   try {
+    const h = await headers()
+    const host = h.get('host') || h.get('x-forwarded-host') || ''
+    return host.replace(/:\d+$/, '')
+  } catch {
+    return ''
+  }
+}
+
+async function getLeadsMode(domain: string): Promise<LeadsMode> {
+  try {
+    const supabase = getSupabase()
+    if (!supabase) return 'single'
+
+    const { data, error } = await supabase
+      .from('company_websites')
+      .select('leads_mode')
+      .eq('domain', domain)
+      .single()
+
+    if (error || !data) return 'single'
+    return (data.leads_mode as LeadsMode) || 'single'
+  } catch {
+    return 'single'
+  }
+}
+
+function toResult(row: PhoneRow | undefined, mode: LeadsMode): PhoneResult {
+  if (!row) {
+    return { phone: FALLBACK_PHONE, whatsappText: FALLBACK_WA_TEXT, source: 'fallback', mode: 'fallback' }
+  }
+  return {
+    phone: row.phone_number,
+    whatsappText: row.whatsapp_text || FALLBACK_WA_TEXT,
+    source: 'database',
+    mode,
+  }
+}
+
+/**
+ * Fetch phone number + WhatsApp text based on the website's leads_mode.
+ *
+ * @param locationSlug - Pass the slug from location pages (e.g. "kuala-lumpur").
+ *   Omit for homepage/blog/other pages.
+ */
+export async function getPhoneNumber(locationSlug?: string): Promise<PhoneResult> {
+  try {
+    const supabase = getSupabase()
     if (!supabase) {
-      return { phone: FALLBACK_PHONE, source: 'env-fallback' }
+      return { phone: FALLBACK_PHONE, whatsappText: FALLBACK_WA_TEXT, source: 'fallback', mode: 'fallback' }
     }
 
-    const website = await resolveWebsite()
+    const domain = await getHostDomain()
+    const mode = await getLeadsMode(domain)
 
-    // Single query: fetch both location-specific and global-pool rows together.
-    // This is one round-trip instead of two sequential queries.
     const { data, error } = await supabase
       .from('phone_numbers')
-      .select('phone_number, location_slug')
-      .eq('website',      website)
-      .eq('product_slug', PRODUCT_SLUG)
-      .eq('is_active',    true)
-      .in('location_slug', [locationSlug, 'all'])
+      .select('phone_number, whatsapp_text, percentage, label, location_slug')
+      .eq('website', domain)
+      .eq('is_active', true)
 
-    if (error) {
-      console.error('[getPhoneNumber] Supabase error:', error.message)
-      return { phone: FALLBACK_PHONE, source: 'env-fallback' }
-    }
-
-    if (!data || data.length === 0) {
-      return { phone: FALLBACK_PHONE, source: 'env-fallback' }
+    if (error || !data || data.length === 0) {
+      return { phone: FALLBACK_PHONE, whatsappText: FALLBACK_WA_TEXT, source: 'fallback', mode: 'fallback' }
     }
 
     const rows = data as PhoneRow[]
 
-    // Prefer location-specific pool; fall back to global pool.
-    const locationPool = rows.filter(r => r.location_slug === locationSlug)
-    const globalPool   = rows.filter(r => r.location_slug === 'all')
+    switch (mode) {
+      case 'single': {
+        return toResult(rows[0], mode)
+      }
 
-    const fromLocation = pickRandom(locationPool)
-    if (fromLocation) {
-      return { phone: fromLocation.phone_number, source: 'location' }
+      case 'rotation': {
+        return toResult(pickWeighted(rows), mode)
+      }
+
+      case 'location': {
+        if (locationSlug) {
+          const locationRows = rows.filter((r) => r.location_slug === locationSlug)
+          if (locationRows.length > 0) {
+            return toResult(pickWeighted(locationRows), mode)
+          }
+        }
+        const allRows = rows.filter((r) => r.location_slug === 'all')
+        return toResult(pickWeighted(allRows.length > 0 ? allRows : rows), mode)
+      }
+
+      case 'hybrid': {
+        if (locationSlug && locationSlug !== 'all') {
+          const locationRows = rows.filter((r) => r.location_slug === locationSlug)
+          if (locationRows.length > 0) {
+            return toResult(pickWeighted(locationRows), mode)
+          }
+        }
+        const allRows = rows.filter((r) => r.location_slug === 'all')
+        return toResult(pickWeighted(allRows.length > 0 ? allRows : rows), mode)
+      }
+
+      default: {
+        return toResult(pickWeighted(rows), mode)
+      }
     }
-
-    const fromGlobal = pickRandom(globalPool)
-    if (fromGlobal) {
-      return { phone: fromGlobal.phone_number, source: 'global-pool' }
-    }
-
-    return { phone: FALLBACK_PHONE, source: 'env-fallback' }
   } catch (err) {
     console.error('[getPhoneNumber] Unexpected error:', err)
-    return { phone: FALLBACK_PHONE, source: 'env-fallback' }
+    return { phone: FALLBACK_PHONE, whatsappText: FALLBACK_WA_TEXT, source: 'fallback', mode: 'fallback' }
   }
 }
 
-// ─── WhatsApp URL builder ─────────────────────────────────────────────────────
-
-/**
- * Build a wa.me deep-link.
- *
- * @param phone    E.164 without '+', e.g. '60123456789'
- * @param message  Optional pre-filled message text (will be URI-encoded)
- */
 export function waLink(phone: string, message?: string): string {
   const query = message ? `?text=${encodeURIComponent(message)}` : ''
   return `https://wa.me/${phone}${query}`
 }
 
-/**
- * Convenience: fetch a random number and immediately return a wa.me link.
- *
- * @param locationSlug  e.g. 'kuala-lumpur'
- * @param message       Optional pre-filled WhatsApp message
- */
-export async function getWhatsAppLink(
-  locationSlug: string,
-  message?: string
-): Promise<string> {
-  const { phone } = await getPhoneNumber(locationSlug)
-  return waLink(phone, message)
+export async function getWhatsAppLink(locationSlug?: string): Promise<string> {
+  const { phone, whatsappText } = await getPhoneNumber(locationSlug)
+  return waLink(phone, whatsappText)
 }
