@@ -10,7 +10,8 @@
     "reviews": "评价",
     "locations": "服务地区",
     "faq": "常见问题",
-    "ctaButton": "WhatsApp 咨询"
+    "blog": "博客",
+    "ctaButton": "立即WhatsApp"
   },
   "fomoBanner": {
     "texts": [
@@ -22,52 +23,51 @@
   },
   "hero": {
     "badge": "马来西亚最受欢迎",
-    "h1": "电动轮椅",
-    "h1Highlight": "租赁与销售",
-    "h1Suffix": "马来西亚",
+    "h1": "购买或租赁",
+    "h1Highlight": "电动轮椅",
+    "h1Suffix": "在马来西亚",
     "subheadline": "轻便。可折叠。动力强劲。月租RM400起或购买RM2,400起。全马当日送达。",
-    "ctaPrimary": "立即 WhatsApp 咨询",
+    "ctaPrimary": "立即WhatsApp",
     "ctaSecondary": "查看产品",
     "trustBadge": "KKM认证 • 6个月保修 • 2,300+客户"
   },
   "stats": {
     "items": [
-      { "value": "2,300+", "label": "服务客户" },
-      { "value": "当日", "label": "送达" },
-      { "value": "RM400", "label": "月租金" },
-      { "value": "4.9★", "label": "Google评分" }
+      {
+        "value": "2,300+",
+        "label": "服务客户"
+      },
+      {
+        "value": "当日",
+        "label": "送达"
+      },
+      {
+        "value": "RM400",
+        "label": "月租金"
+      },
+      {
+        "value": "4.9★",
+        "label": "Google评分"
+      }
     ]
   },
   "products": {
     "heading": "我们的电动轮椅",
-    "subheading": "选择租赁或购买 — 所有型号均可折叠、轻便、KKM认证",
-    "items": {
-      "lightweight": {
-        "name": "轻便电动轮椅",
-        "description": "适合日常使用和出行。可折叠设计，轻松放入车尾箱。",
-        "price": "RM2,400 起",
-        "rental": "月租：RM400"
-      },
-      "reclining": {
-        "name": "可躺式电动轮椅",
-        "description": "完全可躺设计，配有头枕支撑。适合长时间乘坐舒适需求。",
-        "price": "RM2,800 起",
-        "rental": "月租：RM450"
-      },
-      "heavyDuty": {
-        "name": "重型电动轮椅",
-        "description": "承重可达120公斤。加固车架，适合体型较大的用户。",
-        "price": "RM3,200 起",
-        "rental": "月租：RM500"
-      },
-      "travel": {
-        "name": "旅行电动轮椅",
-        "description": "超紧凑设计，可放入飞机客舱。旅行者的理想选择。",
-        "price": "RM2,600 起",
-        "rental": "月租：RM420"
-      }
-    },
-    "cta": "立即咨询"
+    "subheading": "多合一可折叠、轻便、KKM认证电动轮椅",
+    "name": "多合一电动轮椅",
+    "description": "可折叠、轻便、可躺式电动轮椅，适用于居家、医院和旅行。我们的电动轮椅紧凑便携，老年人和康复期用户都能轻松操作。KKM认证，6个月保修。",
+    "rrp": "RM 3,399",
+    "price": "RM 2,400",
+    "rental": "月租RM400起",
+    "saveLabel": "省RM999！",
+    "features": [
+      "KKM认证",
+      "6个月保修",
+      "可折叠轻便",
+      "当日送达",
+      "98%舒适度"
+    ],
+    "cta": "立即WhatsApp"
   },
   "howItWorks": {
     "heading": "订购流程",
@@ -97,12 +97,12 @@
       "寻找适合出行的代步工具？"
     ],
     "solution": "我们的电动轮椅让您重获自由 — 轻便易控，送货上门。",
-    "cta": "今天就获取您的轮椅"
+    "cta": "立即WhatsApp"
   },
   "midCta": {
     "heading": "准备好恢复您的行动自由了吗？",
     "subheading": "立即WhatsApp咨询价格和库存信息",
-    "cta": "立即 WhatsApp 咨询"
+    "cta": "立即WhatsApp"
   },
   "reviews": {
     "heading": "马来西亚客户的评价",
@@ -217,7 +217,7 @@
   "finalCta": {
     "heading": "今天就获取您的电动轮椅",
     "subheading": "月租RM400起或购买RM2,400起。全马当日送达。",
-    "cta": "立即 WhatsApp 咨询",
+    "cta": "立即WhatsApp",
     "phone": "6010-888 9849"
   },
   "footer": {
@@ -225,11 +225,35 @@
     "tagline": "马来西亚值得信赖的电动轮椅租赁与销售服务商。",
     "quickLinks": "快速链接",
     "contact": "联系我们",
-    "copyright": "© 2026 马来西亚电动轮椅。版权所有。",
-    "ssm": "SSM注册企业"
+    "copyright": "© 2026 Ibnu Sina Care Sdn. Bhd. 版权所有。",
+    "ssm": "Ibnu Sina Care Sdn. Bhd. — SSM注册企业"
+  },
+  "blog": {
+    "title": "博客",
+    "metaTitle": "博客 | 马来西亚电动轮椅",
+    "metaDescription": "阅读我们关于电动轮椅、移动出行技巧和轮椅指南的最新文章。",
+    "readMore": "阅读更多",
+    "recentPosts": "最新文章",
+    "publishedOn": "发布于",
+    "minRead": "分钟阅读",
+    "backToBlog": "← 返回博客",
+    "noPosts": "暂无博客文章，请稍后再来！",
+    "sharePre": "分享这篇文章",
+    "breadcrumbHome": "首页",
+    "breadcrumbBlog": "博客"
+  },
+  "location": {
+    "h1Prefix": "电动轮椅 -",
+    "metaTitleSuffix": "| 租赁与销售 | 马来西亚电动轮椅",
+    "metaDescPrefix": "在",
+    "metaDescSuffix": "租赁或购买电动轮椅。当日送达。KKM认证。月租RM400起。立即WhatsApp联系我们。",
+    "breadcrumbHome": "首页",
+    "breadcrumbProduct": "电动轮椅",
+    "nearbyTitle": "附近地区",
+    "nearbySubtitle": "我们也配送到这些附近城市"
   },
   "shared": {
-    "whatsappUs": "WhatsApp 咨询",
+    "whatsappUs": "立即WhatsApp",
     "learnMore": "了解更多",
     "viewAll": "查看全部",
     "freeDelivery": "免费送货",

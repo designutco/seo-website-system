@@ -70,6 +70,9 @@ Reviews existing site layouts for duplicates, researches fresh design inspiratio
 Kimmy — Technical Implementation Specialist
 Implements metadata, schema markup, alt text, SEO optimization, full i18n (translations, routing, language switcher), and WhatsApp redirect lead tracking pages.
 
+Hanabi — Blog Writer
+Generates SEO-optimized blog articles with proper heading hierarchy (H1→H2→H3→H4→p), images with alt text, internal backlinks, meta descriptions, and excerpts. Inserts articles into Supabase (blog_posts + blog_translations tables). Can run independently at any time after the website is deployed.
+
 Layla — QA & Deployment Specialist
 Verifies phone number system integration with the shared database, pushes code to GitHub, and deploys to Vercel. Runs after user confirms the website design.
 
@@ -147,36 +150,57 @@ When setting up a new project:
 2. Add `loadEnvConfig(process.cwd() + '/../..')` to the project's `next.config.ts`
 3. Add the same env vars to Vercel for production via `vercel env add`
 
-## Phone Numbers
+## Phone Numbers & Leads Mode
 
-Phone numbers are stored in Supabase.
+Phone numbers are stored in the `phone_numbers` table. The `company_websites` table has a `leads_mode` column that controls how numbers are selected.
 
-Multiple phone numbers can exist per website+product+location combination. One is selected at random each time a user clicks a WhatsApp button.
+### 4 Leads Modes
 
-Phone numbers must be mapped to:
+| Mode | Behavior | Use Case |
+|------|----------|----------|
+| `single` | One default number → always returned | New websites, single owner |
+| `rotation` | Multiple numbers → weighted random by `percentage` | Multiple sales agents |
+| `location` | Filter by `location_slug` → weighted random. Falls back to `all` | Regional sales teams |
+| `hybrid` | Location pages → location numbers. Other pages → `all` numbers | Regional + national agents |
 
-- website
-- product
-- location
+### How It Works
 
-Example query logic (fetch all active numbers, pick one at random in code):
+1. User clicks WhatsApp → redirected to `/redirect-whatsapp-1?loc={slug}`
+2. Server reads domain from HTTP host header
+3. Fetches `leads_mode` from `company_websites` WHERE `domain = host`
+4. Fetches all active numbers from `phone_numbers` WHERE `website = host`
+5. Applies mode logic:
+   - **single**: Return first number
+   - **rotation**: Pick from all numbers by weighted `percentage`
+   - **location**: Filter by `location_slug`, pick by percentage. Falls back to `all`
+   - **hybrid**: Location pages use location numbers only. Homepage/blog use `all` numbers only
+6. Builds WhatsApp URL with `phone_number` + `whatsapp_text` from the selected row
 
-select phone_number
-from phone_numbers
-where website = 'oxihome.my'
-and product_slug = 'oxygen-machine'
-and location_slug = 'kuala-lumpur'
-and is_active = true
+### phone_numbers Table Columns
 
-## Initial Phone Number Seeding
+- `website` — Vercel domain (e.g. `electric-wheelchair-malaysia.vercel.app`)
+- `product_slug` — product identifier
+- `location_slug` — city slug or `'all'` for default
+- `phone_number` — full international format
+- `whatsapp_text` — pre-filled WhatsApp message
+- `percentage` — weight for random selection (relative, doesn't need to sum to 100)
+- `label` — `'default'` for initial number, agent name for additional numbers
+- `type` — `'default'` for initial setup, `'custom'` for additional numbers
+- `is_active` — boolean
 
-When creating a new website project, always insert at least one phone number into the database so the WhatsApp CTA works immediately. Use the `all` location slug as a fallback number that works across all location pages.
+## Initial Phone Number Seeding (MANDATORY before deploy)
 
-Example insert (run after the project is created):
+When creating a new website, always:
 
-insert into phone_numbers (website, product_slug, location_slug, phone_number, is_active)
-values
-  ('newsite.my', 'default', 'all', '60123456789', true);
+1. Insert one row in `phone_numbers`:
+```sql
+INSERT INTO phone_numbers (website, product_slug, location_slug, phone_number, label, type, is_active, whatsapp_text, percentage)
+VALUES ('domain.vercel.app', 'product-slug', 'all', '60XXXXXXXXX', 'default', 'default', true, 'Hi, saya berminat...', 100);
+```
+
+2. Ensure `company_websites` row exists with `leads_mode = 'single'` (default).
+
+3. Ask user to choose leads mode during project setup.
 
 The phone number should be provided by the user during project setup. If not provided, ask for it before deployment.
 

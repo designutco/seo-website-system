@@ -72,14 +72,14 @@ function useScrollAnimation() {
 }
 
 /* ============================================
-   PRODUCT DATA
+   PRODUCT GALLERY DATA
    ============================================ */
-const productKeys = ['lightweight', 'reclining', 'heavyDuty', 'travel'] as const;
-const productImages = [
-  'https://placehold.co/400x300/1B2D5B/FFFFFF?text=Lightweight',
-  'https://placehold.co/400x300/2A4080/FFFFFF?text=Reclining',
-  'https://placehold.co/400x300/1B2D5B/FFFFFF?text=Heavy+Duty',
-  'https://placehold.co/400x300/2A4080/FFFFFF?text=Travel',
+const productGallery = [
+  'https://static.wixstatic.com/media/d3104b_64b5d16422824a7384e5630d9b70c0ae~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_7d971873a0b847e8adf9b4d7fbe36671~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_e316a4a91161459bb8480465cea5bea2~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_23e852bbc2014f68bf15ba24ed1985cc~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_90288668fcea43789582d2f818832e9a~mv2.png',
 ];
 
 /* ============================================
@@ -104,18 +104,25 @@ const whyChooseIcons = [
    GALLERY IMAGES
    ============================================ */
 const galleryImages = [
-  'https://placehold.co/600x600/1B2D5B/FFFFFF?text=Customer+1',
-  'https://placehold.co/400x300/2A4080/FFFFFF?text=Customer+2',
-  'https://placehold.co/400x300/1B2D5B/F47B20?text=Customer+3',
-  'https://placehold.co/400x300/2A4080/FFFFFF?text=Customer+4',
-  'https://placehold.co/400x300/1B2D5B/FFFFFF?text=Customer+5',
-  'https://placehold.co/400x300/0F1B3A/F47B20?text=Customer+6',
+  'https://static.wixstatic.com/media/d3104b_e316a4a91161459bb8480465cea5bea2~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_23e852bbc2014f68bf15ba24ed1985cc~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_b4447471360744dcad575e11b7ab844b~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_2886cdd04bdc4d219906b4ca405282b0~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_e4be4ee4a4f045e0ad6bc88914d85baa~mv2.png',
+  'https://static.wixstatic.com/media/d3104b_a9a66ccdc948499babc488ba93cba1dc~mv2.png',
 ];
 
 /* ============================================
    MAIN COMPONENT
    ============================================ */
-export default function HomePageClient() {
+interface LocationProps {
+  cityName?: string;
+  locationSlug?: string;
+  nearbyLocations?: { slug: string; name: string }[];
+}
+
+export default function HomePageClient({ cityName, locationSlug, nearbyLocations }: LocationProps = {}) {
+  const isLocationPage = !!cityName;
   const locale = useLocale();
   const t = useTranslations();
   const waHref = waRedirect(locale);
@@ -124,8 +131,8 @@ export default function HomePageClient() {
   const [fomoIndex, setFomoIndex] = useState(0);
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openRegion, setOpenRegion] = useState<string | null>(regionOrder[0]);
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState(0);
   const productsRef = useRef<HTMLDivElement>(null);
 
   /* ---- FOMO rotation ---- */
@@ -173,6 +180,7 @@ export default function HomePageClient() {
     { label: t('nav.reviews'), href: '#reviews' },
     { label: t('nav.locations'), href: '#locations' },
     { label: t('nav.faq'), href: '#faq' },
+    { label: t('nav.blog'), href: `/${locale}/blog` },
   ];
 
   return (
@@ -253,16 +261,18 @@ export default function HomePageClient() {
           }}
         >
           {/* Logo */}
-          <a
-            href={`/${locale}`}
-            style={{
-              fontWeight: 800,
-              fontSize: '18px',
-              color: 'var(--navy)',
-              letterSpacing: 'var(--tracking-tight)',
-            }}
-          >
-            {t('nav.brandName')}
+          <a href={`/${locale}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="6" fill="#1B2D5B"/>
+              <circle cx="13" cy="22" r="5.5" stroke="#F47B20" strokeWidth="2" fill="none"/>
+              <circle cx="13" cy="22" r="1.5" fill="#F47B20"/>
+              <circle cx="15" cy="8" r="2.5" fill="#FFFFFF"/>
+              <path d="M14 11v6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M14 17h6l2 5" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="22" cy="22" r="2.5" stroke="#F47B20" strokeWidth="1.5" fill="none"/>
+              <path d="M24 5l-3 4h3l-3 4" stroke="#F47B20" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span style={{ fontWeight: 800, fontSize: '16px', color: 'var(--navy)', letterSpacing: '-0.02em' }}>{t('nav.brandName')}</span>
           </a>
 
           {/* Desktop nav links */}
@@ -430,190 +440,211 @@ export default function HomePageClient() {
         )}
       </nav>
 
+      {/* Breadcrumbs — location pages only */}
+      {isLocationPage && (
+        <div style={{ background: 'var(--surface)', padding: '12px 0', borderBottom: '1px solid rgba(27,45,91,0.06)' }}>
+          <div className="section-container" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+            <a href={`/${locale}`} style={{ color: 'var(--text-muted)' }}>{t('location.breadcrumbHome')}</a>
+            {' > '}
+            <a href={`/${locale}#products`} style={{ color: 'var(--text-muted)' }}>{t('location.breadcrumbProduct')}</a>
+            {' > '}
+            <span style={{ color: 'var(--navy)', fontWeight: 600 }}>{cityName}</span>
+          </div>
+        </div>
+      )}
+
       {/* ============================================
-          3. HERO — Floating Card Over Full-Width Image
+          3. HERO — Clean Split Layout (no photo BG)
           ============================================ */}
       <section
         style={{
           position: 'relative',
-          minHeight: '520px',
+          minHeight: '600px',
           overflow: 'hidden',
+          background: 'linear-gradient(155deg, #0F1B3A 0%, #1B2D5B 45%, #2A4080 100%)',
         }}
       >
-        {/* Background image */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'url(https://placehold.co/1920x800/1B2D5B/FFFFFF?text=Electric+Wheelchair)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {/* Gradient overlay */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(135deg, rgba(27,45,91,0.85) 0%, rgba(27,45,91,0.4) 60%, transparent 100%)',
-          }}
-        />
+        {/* Subtle radial accent glow */}
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 50% 60% at 70% 50%, rgba(244,123,32,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        {/* Subtle grid pattern */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '40px 40px', pointerEvents: 'none' }} />
 
         <div
           className="section-container"
           style={{
             position: 'relative',
             zIndex: 1,
-            display: 'flex',
-            alignItems: 'flex-end',
-            minHeight: '520px',
-            paddingBottom: 'var(--space-2xl)',
-            paddingTop: 'var(--space-2xl)',
+            paddingTop: 'var(--space-3xl)',
+            paddingBottom: 'var(--space-3xl)',
           }}
         >
-          {/* Floating card */}
-          <div
-            className="fade-up hero-card"
-            style={{
-              background: 'var(--white)',
-              borderRadius: 'var(--radius-xl)',
-              padding: 'var(--space-xl)',
-              boxShadow: 'var(--shadow-xl)',
-              maxWidth: '560px',
-              width: '100%',
-            }}
-          >
-            {/* Badge */}
-            <span
-              style={{
-                display: 'inline-block',
-                background: 'var(--orange-pale)',
-                color: 'var(--orange)',
-                fontSize: '13px',
-                fontWeight: 700,
-                padding: '4px 14px',
-                borderRadius: 'var(--radius-full)',
-                marginBottom: 'var(--space-md)',
-              }}
-            >
-              {t('hero.badge')}
-            </span>
-
-            <h1
-              style={{
-                fontSize: 'clamp(24px, 4vw, 40px)',
-                fontWeight: 800,
-                lineHeight: 'var(--leading-tight)',
-                letterSpacing: 'var(--tracking-tight)',
-                color: 'var(--navy)',
-                marginBottom: 'var(--space-md)',
-              }}
-            >
-              {t('hero.h1')}{' '}
-              <span style={{ color: 'var(--orange)' }}>
-                {t('hero.h1Highlight')}
-              </span>{' '}
-              {t('hero.h1Suffix')}
-            </h1>
-
-            <p
-              style={{
-                fontSize: '16px',
-                lineHeight: 'var(--leading-relaxed)',
-                color: 'var(--text-muted)',
-                marginBottom: 'var(--space-lg)',
-              }}
-            >
-              {t('hero.subheadline')}
-            </p>
-
-            {/* CTAs */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 'var(--space-md)',
-                marginBottom: 'var(--space-lg)',
-              }}
-            >
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="wa-btn"
+          <div className="hero-split-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '48px',
+            alignItems: 'center',
+            minHeight: '500px',
+          }}>
+            {/* Left column — Text */}
+            <div className="fade-up">
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'rgba(244,123,32,0.12)',
+                  border: '1px solid rgba(244,123,32,0.25)',
+                  color: 'rgba(255,255,255,0.9)',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  padding: '6px 16px',
+                  borderRadius: 'var(--radius-full)',
+                  marginBottom: 'var(--space-lg)',
+                }}
               >
-                <WhatsAppIcon size={18} />
-                {t('hero.ctaPrimary')}
-              </a>
-              <button
-                className="ghost-btn"
-                onClick={scrollToProducts}
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--orange)', animation: 'fomoPulse 2s ease-in-out infinite' }} />
+                {t('hero.badge')}
+              </span>
+
+              <h1
+                style={{
+                  fontSize: 'clamp(34px, 5vw, 54px)',
+                  fontWeight: 800,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.025em',
+                  color: 'var(--white)',
+                  marginBottom: 'var(--space-lg)',
+                }}
               >
-                {t('hero.ctaSecondary')}
-              </button>
+                {isLocationPage ? (
+                  <>{t('location.h1Prefix')}{' '}<span style={{ color: 'var(--orange)' }}>{cityName}</span>{' — '}{t('hero.h1Highlight')}</>
+                ) : (
+                  <>{t('hero.h1')}<br /><span style={{ color: 'var(--orange)' }}>{t('hero.h1Highlight')}</span>{' '}{t('hero.h1Suffix')}</>
+                )}
+              </h1>
+
+              <h2 style={{ fontSize: '17px', fontWeight: 400, lineHeight: 1.7, color: 'rgba(255,255,255,0.7)', marginBottom: 'var(--space-xl)', maxWidth: '460px' }}>
+                {t('hero.subheadline')}
+              </h2>
+
+              <div className="hero-cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: 'var(--space-xl)' }}>
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="wa-btn"
+                  style={{ fontSize: '16px', padding: '14px 32px', boxShadow: '0 8px 28px rgba(37,211,102,0.3)' }}
+                >
+                  <WhatsAppIcon size={18} />
+                  {t('hero.ctaPrimary')}
+                </a>
+                <button
+                  onClick={scrollToProducts}
+                  className="ghost-btn"
+                  style={{ borderColor: 'rgba(255,255,255,0.3)', color: 'var(--white)', fontSize: '15px', padding: '12px 28px' }}
+                >
+                  {t('hero.ctaSecondary')}
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {['KKM Certified', '6-Month Warranty', 'Same-Day Delivery'].map((item) => (
+                  <span key={item} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: 'rgba(255,255,255,0.7)', fontSize: '12px', fontWeight: 500, background: 'rgba(255,255,255,0.08)', padding: '5px 12px', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="var(--orange)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 10 8 14 16 6" /></svg>
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            {/* Trust badge */}
-            <p
-              style={{
-                fontSize: '13px',
-                color: 'var(--text-muted)',
-                fontWeight: 500,
-              }}
-            >
-              {t('hero.trustBadge')}
-            </p>
+            {/* Right column — Product image with stamps */}
+            <div className="hero-right-col" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '420px' }}>
+              {/* Outer decorative ring */}
+              <div style={{ position: 'absolute', width: '380px', height: '380px', borderRadius: '50%', border: '1px dashed rgba(244,123,32,0.2)', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }} />
+              {/* Inner glow */}
+              <div style={{ position: 'absolute', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(244,123,32,0.12) 0%, transparent 70%)', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }} />
+
+              {/* Main product image */}
+              <div className="hero-float" style={{ position: 'relative', zIndex: 2 }}>
+                <img
+                  src="https://static.wixstatic.com/media/d3104b_64b5d16422824a7384e5630d9b70c0ae~mv2.png"
+                  alt={t('products.name')}
+                  style={{ width: '340px', maxWidth: '90%', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.4))', position: 'relative', zIndex: 1 }}
+                />
+              </div>
+
+              {/* Stamp: KKM Certified (top-left) */}
+              <div style={{ position: 'absolute', top: '8%', left: '5%', zIndex: 3, width: '76px', height: '76px', borderRadius: '50%', background: 'rgba(27,45,91,0.95)', border: '2px dashed rgba(244,123,32,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'white', fontSize: '10px', fontWeight: 700, lineHeight: 1.2, padding: '6px', transform: 'rotate(-8deg)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
+                KKM<br/>Certified
+              </div>
+
+              {/* Stamp: Same Day (top-right) */}
+              <div style={{ position: 'absolute', top: '5%', right: '8%', zIndex: 3, width: '76px', height: '76px', borderRadius: '50%', background: 'rgba(244,123,32,0.95)', border: '2px dashed rgba(255,255,255,0.5)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'white', fontSize: '10px', fontWeight: 700, lineHeight: 1.2, padding: '6px', transform: 'rotate(6deg)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
+                Same Day<br/>Delivery
+              </div>
+
+              {/* Stamp: 6-Month Warranty (bottom-right) */}
+              <div style={{ position: 'absolute', bottom: '10%', right: '5%', zIndex: 3, width: '76px', height: '76px', borderRadius: '50%', background: 'rgba(27,45,91,0.95)', border: '2px dashed rgba(244,123,32,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'white', fontSize: '10px', fontWeight: 700, lineHeight: 1.2, padding: '6px', transform: 'rotate(10deg)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
+                6-Month<br/>Warranty
+              </div>
+
+              {/* Stamp: RM400/mo (bottom-left) */}
+              <div style={{ position: 'absolute', bottom: '8%', left: '8%', zIndex: 3, width: '76px', height: '76px', borderRadius: '50%', background: 'rgba(244,123,32,0.95)', border: '2px dashed rgba(255,255,255,0.5)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'white', fontSize: '10px', fontWeight: 700, lineHeight: 1.2, padding: '6px', transform: 'rotate(-6deg)', boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}>
+                From<br/>RM400/mo
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ============================================
-          4. STATS BAR
+          4. STATS — Boxed USP Cards
           ============================================ */}
-      <section
-        style={{
-          background: 'var(--gradient-navy)',
-          padding: 'var(--space-lg) 0',
-        }}
-      >
+      <section style={{ background: 'var(--white)', padding: 'var(--space-2xl) 0' }}>
         <div
-          className="section-container"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 'var(--space-md)',
-            textAlign: 'center',
-          }}
+          className="section-container stats-grid"
         >
           {[0, 1, 2, 3].map((i) => (
-            <div key={i}>
-              <div
+            <div
+              key={i}
+              style={{
+                background: 'var(--surface)',
+                borderRadius: 'var(--radius-lg)',
+                padding: 'var(--space-lg)',
+                textAlign: 'center',
+                border: '1px solid rgba(27,45,91,0.06)',
+                boxShadow: '0 2px 8px rgba(27,45,91,0.04)',
+              }}
+            >
+              <h5
                 style={{
-                  fontSize: 'clamp(18px, 3vw, 28px)',
+                  fontSize: 'clamp(20px, 3vw, 30px)',
                   fontWeight: 800,
                   color: 'var(--orange)',
-                  lineHeight: 'var(--leading-tight)',
+                  lineHeight: 1.1,
+                  marginBottom: '6px',
                 }}
               >
                 {t(`stats.items.${i}.value`)}
-              </div>
-              <div
+              </h5>
+              <h6
                 style={{
-                  fontSize: 'clamp(11px, 1.5vw, 14px)',
-                  color: 'rgba(255,255,255,0.8)',
-                  fontWeight: 500,
-                  marginTop: '4px',
+                  fontSize: 'clamp(11px, 1.4vw, 13px)',
+                  color: 'var(--text-muted)',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
                 }}
               >
                 {t(`stats.items.${i}.label`)}
-              </div>
+              </h6>
             </div>
           ))}
         </div>
       </section>
 
       {/* ============================================
-          5. PRODUCTS — Horizontal Snap-Scroll Cards
+          5. PRODUCTS — Single Product Showcase
           ============================================ */}
       <section
         id="products"
@@ -623,7 +654,8 @@ export default function HomePageClient() {
       >
         <div className="section-container">
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-            <h2
+            <span style={{ display: 'inline-block', background: 'var(--orange-pale)', color: 'var(--orange)', fontSize: '13px', fontWeight: 700, padding: '5px 16px', borderRadius: 'var(--radius-full)', marginBottom: 'var(--space-md)' }}>Rent or Buy</span>
+            <h3
               style={{
                 fontSize: 'clamp(24px, 3.5vw, 36px)',
                 fontWeight: 800,
@@ -633,96 +665,180 @@ export default function HomePageClient() {
               }}
             >
               {t('products.heading')}
-            </h2>
+            </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '16px', maxWidth: '600px', margin: '0 auto' }}>
               {t('products.subheading')}
             </p>
           </div>
 
-          <div className="snap-scroll-x hide-scrollbar">
-            {productKeys.map((key, i) => (
-              <div
-                key={key}
-                className="fade-up"
+          <div
+            className="fade-up product-showcase"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr',
+              gap: 'var(--space-2xl)',
+              background: 'var(--white)',
+              borderRadius: 'var(--radius-xl)',
+              padding: 'var(--space-xl)',
+              boxShadow: 'var(--shadow-xl)',
+            }}
+          >
+            {/* Left: Single Product Image */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#ffffff',
+                borderRadius: 'var(--radius-xl)',
+                padding: '32px',
+                border: '1px solid var(--surface)',
+                position: 'relative',
+              }}
+            >
+              <img
+                src={productGallery[0]}
+                alt={t('products.name')}
                 style={{
-                  width: '300px',
-                  minWidth: '280px',
-                  background: 'var(--white)',
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-card)',
-                  transition: 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)',
+                  width: '100%',
+                  maxWidth: '380px',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.1))',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+              />
+            </div>
+
+            {/* Right: Product Info */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <h4
+                style={{
+                  fontSize: 'clamp(22px, 3vw, 30px)',
+                  fontWeight: 800,
+                  color: 'var(--navy)',
+                  letterSpacing: 'var(--tracking-tight)',
+                  marginBottom: 'var(--space-md)',
+                }}
               >
-                {/* Product image */}
+                {t('products.name')}
+              </h4>
+
+              {/* Feature badges */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: 'var(--space-lg)',
+                }}
+              >
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    style={{
+                      display: 'inline-block',
+                      background: 'var(--orange-pale)',
+                      color: 'var(--orange)',
+                      fontSize: '12px',
+                      fontWeight: 700,
+                      padding: '4px 12px',
+                      borderRadius: 'var(--radius-full)',
+                    }}
+                  >
+                    {t(`products.features.${i}`)}
+                  </span>
+                ))}
+              </div>
+
+              {/* Description */}
+              <p
+                style={{
+                  fontSize: '15px',
+                  lineHeight: 'var(--leading-relaxed)',
+                  color: 'var(--text-muted)',
+                  marginBottom: 'var(--space-xl)',
+                }}
+              >
+                {t('products.description')}
+              </p>
+
+              {/* Price block */}
+              <div
+                style={{
+                  background: 'var(--surface)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: 'var(--space-lg)',
+                  marginBottom: 'var(--space-lg)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                  <span
+                    style={{
+                      fontSize: '16px',
+                      color: 'var(--text-muted)',
+                      textDecoration: 'line-through',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {t('products.rrp')}
+                  </span>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      background: 'var(--orange)',
+                      color: 'var(--white)',
+                      fontSize: '12px',
+                      fontWeight: 700,
+                      padding: '2px 10px',
+                      borderRadius: 'var(--radius-full)',
+                    }}
+                  >
+                    {t('products.saveLabel')}
+                  </span>
+                </div>
                 <div
                   style={{
-                    width: '100%',
-                    height: '200px',
-                    backgroundImage: `url(${productImages[i]})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    fontSize: 'clamp(28px, 4vw, 36px)',
+                    fontWeight: 800,
+                    color: 'var(--navy)',
+                    lineHeight: 1,
+                    marginBottom: '8px',
                   }}
-                />
-                <div style={{ padding: 'var(--space-lg)' }}>
-                  <h3
-                    style={{
-                      fontSize: '18px',
-                      fontWeight: 700,
-                      color: 'var(--navy)',
-                      marginBottom: 'var(--space-sm)',
-                    }}
-                  >
-                    {t(`products.items.${key}.name`)}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: '14px',
-                      color: 'var(--text-muted)',
-                      lineHeight: 'var(--leading-relaxed)',
-                      marginBottom: 'var(--space-md)',
-                    }}
-                  >
-                    {t(`products.items.${key}.description`)}
-                  </p>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: 'var(--space-md)',
-                    }}
-                  >
-                    <span style={{ fontWeight: 700, color: 'var(--navy)', fontSize: '16px' }}>
-                      {t(`products.items.${key}.price`)}
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '13px',
-                        color: 'var(--orange)',
-                        fontWeight: 600,
-                        background: 'var(--orange-pale)',
-                        padding: '2px 10px',
-                        borderRadius: 'var(--radius-full)',
-                      }}
-                    >
-                      {t(`products.items.${key}.rental`)}
-                    </span>
-                  </div>
-                  <a
-                    href={waHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="brand-btn"
-                    style={{ width: '100%', textAlign: 'center', fontSize: '14px', padding: '10px 20px' }}
-                  >
-                    {t('products.cta')}
-                  </a>
+                >
+                  {t('products.price')}
+                </div>
+                <div
+                  style={{
+                    fontSize: '15px',
+                    color: 'var(--orange)',
+                    fontWeight: 600,
+                  }}
+                >
+                  {t('products.rental')}
                 </div>
               </div>
-            ))}
+
+              {/* WhatsApp CTA */}
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="wa-btn"
+                style={{
+                  fontSize: '16px',
+                  padding: '14px 32px',
+                  textAlign: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <WhatsAppIcon size={20} />
+                {t('products.cta')}
+              </a>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: 'var(--space-md)' }}>
+                {['Free Delivery', 'No Deposit', 'Pay Online'].map((tag) => (
+                  <span key={tag} style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', background: 'var(--surface)', padding: '4px 10px', borderRadius: 'var(--radius-full)' }}>✓ {tag}</span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -733,7 +849,8 @@ export default function HomePageClient() {
       <section id="how-it-works" className="section-spacing">
         <div className="section-container">
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-            <h2
+            <span style={{ display: 'inline-block', background: 'var(--orange-pale)', color: 'var(--orange)', fontSize: '13px', fontWeight: 700, padding: '5px 16px', borderRadius: 'var(--radius-full)', marginBottom: 'var(--space-md)' }}>Simple Process</span>
+            <h3
               style={{
                 fontSize: 'clamp(24px, 3.5vw, 36px)',
                 fontWeight: 800,
@@ -743,7 +860,7 @@ export default function HomePageClient() {
               }}
             >
               {t('howItWorks.heading')}
-            </h2>
+            </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>
               {t('howItWorks.subheading')}
             </p>
@@ -813,7 +930,7 @@ export default function HomePageClient() {
                   {i + 1}
                 </div>
 
-                <h3
+                <h5
                   style={{
                     fontSize: '18px',
                     fontWeight: 700,
@@ -822,7 +939,7 @@ export default function HomePageClient() {
                   }}
                 >
                   {t(`howItWorks.steps.${i}.title`)}
-                </h3>
+                </h5>
                 <p
                   style={{
                     fontSize: '14px',
@@ -854,7 +971,7 @@ export default function HomePageClient() {
             }}
           >
             <div style={{ textAlign: 'center', marginBottom: 'var(--space-lg)' }}>
-              <h2
+              <h3
                 style={{
                   fontSize: 'clamp(24px, 3.5vw, 36px)',
                   fontWeight: 800,
@@ -864,7 +981,7 @@ export default function HomePageClient() {
                 }}
               >
                 {t('risk.heading')}
-              </h2>
+              </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>
                 {t('risk.subheading')}
               </p>
@@ -955,13 +1072,21 @@ export default function HomePageClient() {
         style={{
           background: 'var(--gradient-navy)',
           padding: 'var(--space-3xl) 0',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
+        {/* Background photo */}
+        <img
+          src="https://images.pexels.com/photos/6646922/pexels-photo-6646922.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2"
+          alt=""
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.15, pointerEvents: 'none' }}
+        />
         <div
           className="section-container fade-up"
-          style={{ textAlign: 'center' }}
+          style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}
         >
-          <h2
+          <h3
             style={{
               fontSize: 'clamp(24px, 4vw, 40px)',
               fontWeight: 800,
@@ -971,7 +1096,7 @@ export default function HomePageClient() {
             }}
           >
             {t('midCta.heading')}
-          </h2>
+          </h3>
           <p
             style={{
               color: 'rgba(255,255,255,0.8)',
@@ -993,113 +1118,171 @@ export default function HomePageClient() {
             <WhatsAppIcon size={20} />
             {t('midCta.cta')}
           </a>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: 'var(--space-md)', justifyContent: 'center' }}>
+            {['Reply Within 1 Hour', 'No Obligation', 'Free Consultation'].map((tag) => (
+              <span key={tag} style={{ fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.6)', background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: 'var(--radius-full)' }}>✓ {tag}</span>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ============================================
-          9. GOOGLE REVIEWS — Staggered Offset Cards
+          9. GOOGLE REVIEWS — Marquee Carousel
           ============================================ */}
-      <section id="reviews" className="section-spacing">
-        <div className="section-container">
-          {/* Header with Google branding */}
+      <section
+        id="reviews"
+        style={{
+          paddingTop: 'var(--space-3xl)',
+          paddingBottom: 'var(--space-3xl)',
+          overflow: 'hidden',
+          background: 'var(--surface)',
+        }}
+      >
+        {/* Header (centered) */}
+        <div
+          className="fade-up reviews-header"
+          style={{
+            textAlign: 'center',
+            marginBottom: 'var(--space-2xl)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ marginBottom: '8px' }}>
+            <GoogleIcon size={24} />
+          </div>
           <div
-            className="fade-up"
             style={{
-              textAlign: 'center',
-              marginBottom: 'var(--space-2xl)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              marginBottom: '4px',
             }}
           >
-            <div
+            <span
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '12px',
-                marginBottom: 'var(--space-md)',
+                fontSize: '32px',
+                fontWeight: 800,
+                color: 'var(--navy)',
+                lineHeight: 1,
               }}
             >
-              {/* Google logo */}
-              <svg width="74" height="24" viewBox="0 0 74 24" fill="none">
-                <path d="M9.24 8.19v2.46h5.88a5.03 5.03 0 01-2.2 3.28l3.56 2.77c2.07-1.92 3.27-4.74 3.27-8.09 0-.78-.07-1.53-.2-2.25H9.24z" fill="#4285F4"/>
-                <path d="M3.18 14.09l-.82.63-2.18 1.7C2.99 20.53 6.7 23 10.24 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53h-.9z" fill="#34A853"/>
-                <path d="M.18 7.07A11.8 11.8 0 000 12c0 1.78.43 3.45 1.18 4.93l2.82-2.18.82-.63a7.07 7.07 0 010-4.24L.18 7.07z" fill="#FBBC05"/>
-                <path d="M10.24 4.75c1.62 0 3.06.56 4.21 1.64l3.15-3.15A10.8 10.8 0 0010.24.38C6.7.38 2.99 2.84 1.18 7.07L5.08 9.9c.87-2.6 3.3-4.53 6.16-4.53v-.62z" fill="#EA4335"/>
-                <text x="26" y="17" fill="#5F6368" fontFamily="sans-serif" fontWeight="500" fontSize="16">Google</text>
-              </svg>
-            </div>
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                marginBottom: 'var(--space-sm)',
-              }}
-            >
-              <span
-                style={{
-                  fontSize: '32px',
-                  fontWeight: 800,
-                  color: 'var(--navy)',
-                }}
-              >
-                {t('reviews.rating')}
-              </span>
-              <Stars count={5} />
-            </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>
-              {t('reviews.subheading')}
-            </p>
+              {t('reviews.rating')}
+            </span>
+            <span style={{ display: 'inline-flex', gap: '2px' }}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg key={i} width="20" height="20" viewBox="0 0 20 20" fill="var(--google-gold)">
+                  <path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.51.91-5.32L2.27 6.7l5.34-.78L10 1z" />
+                </svg>
+              ))}
+            </span>
           </div>
+          <span style={{ fontSize: '14px', color: 'var(--text-muted)', fontWeight: 500, marginBottom: 'var(--space-md)' }}>
+            {t('reviews.subheading')}
+          </span>
+          <h3
+            style={{
+              fontSize: '32px',
+              fontWeight: 800,
+              color: 'var(--navy)',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            {t('reviews.heading')}
+          </h3>
+        </div>
 
-          {/* Staggered review cards */}
-          <div className="stagger-grid" style={{ display: 'grid', gap: 'var(--space-lg)' }}>
-            {[0, 1, 2, 3, 4, 5].map((i) => (
+        {/* Marquee track */}
+        <div
+          style={{
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+          }}
+          onMouseEnter={(e) => {
+            const track = e.currentTarget.querySelector<HTMLDivElement>('[data-marquee]');
+            if (track) track.style.animationPlayState = 'paused';
+          }}
+          onMouseLeave={(e) => {
+            const track = e.currentTarget.querySelector<HTMLDivElement>('[data-marquee]');
+            if (track) track.style.animationPlayState = 'running';
+          }}
+        >
+          <div
+            data-marquee
+            style={{
+              display: 'flex',
+              gap: '20px',
+              animation: 'marqueeLeft 60s linear infinite',
+              width: 'max-content',
+            }}
+          >
+            {/* Double the reviews for seamless loop */}
+            {[...[0, 1, 2, 3, 4, 5], ...[0, 1, 2, 3, 4, 5]].map((i, idx) => (
               <div
-                key={i}
-                className="fade-up"
+                key={idx}
                 style={{
+                  flexShrink: 0,
+                  width: '320px',
                   background: 'var(--white)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: 'var(--space-lg)',
-                  boxShadow: 'var(--shadow-card)',
-                  borderLeft: '3px solid var(--navy)',
-                  transition: 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)',
+                  borderRadius: '16px',
+                  padding: '24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px',
+                  boxShadow: '0 4px 20px rgba(27,45,91,0.07)',
+                  border: '1px solid rgba(27,45,91,0.08)',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
-                {/* Google icon + stars */}
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: 'var(--space-md)',
-                  }}
-                >
-                  <GoogleIcon size={20} />
-                  <Stars count={5} />
+                {/* Header row: stars + Google icon */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ display: 'inline-flex', gap: '2px' }}>
+                    {Array.from({ length: 5 }).map((_, j) => (
+                      <svg key={j} width="16" height="16" viewBox="0 0 20 20" fill="var(--google-gold)">
+                        <path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.51.91-5.32L2.27 6.7l5.34-.78L10 1z" />
+                      </svg>
+                    ))}
+                  </span>
+                  <GoogleIcon size={18} />
                 </div>
 
+                {/* Review text */}
                 <p
                   style={{
                     fontSize: '14px',
-                    lineHeight: 'var(--leading-relaxed)',
+                    lineHeight: 1.6,
                     color: 'var(--text)',
-                    marginBottom: 'var(--space-md)',
                   }}
                 >
                   &ldquo;{t(`reviews.items.${i}.text`)}&rdquo;
                 </p>
 
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '14px', color: 'var(--navy)' }}>
-                    {t(`reviews.items.${i}.name`)}
+                {/* Attribution */}
+                <div style={{ borderTop: '1px solid rgba(27,45,91,0.08)', paddingTop: '12px', display: 'flex', alignItems: 'center', gap: '10px', marginTop: 'auto' }}>
+                  {/* Avatar circle */}
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    background: 'var(--orange)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--white)',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}>
+                    {t(`reviews.items.${i}.name`).charAt(0)}
                   </div>
-                  <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-                    {t(`reviews.items.${i}.location`)}
+                  <div>
+                    <h5 style={{ fontSize: '14px', fontWeight: 700, color: 'var(--navy)', margin: 0 }}>
+                      {t(`reviews.items.${i}.name`)}
+                    </h5>
+                    <h6 style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 400, margin: 0 }}>
+                      {t(`reviews.items.${i}.location`)}
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -1114,7 +1297,8 @@ export default function HomePageClient() {
       <section className="section-spacing" style={{ background: 'var(--surface)' }}>
         <div className="section-container">
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-            <h2
+            <span style={{ display: 'inline-block', background: 'var(--orange-pale)', color: 'var(--orange)', fontSize: '13px', fontWeight: 700, padding: '5px 16px', borderRadius: 'var(--radius-full)', marginBottom: 'var(--space-md)' }}>Trusted Nationwide</span>
+            <h3
               style={{
                 fontSize: 'clamp(24px, 3.5vw, 36px)',
                 fontWeight: 800,
@@ -1123,16 +1307,10 @@ export default function HomePageClient() {
               }}
             >
               {t('whyChoose.heading')}
-            </h2>
+            </h3>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: 'var(--space-lg)',
-            }}
-          >
+          <div className="why-grid">
             {[0, 1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}
@@ -1164,7 +1342,7 @@ export default function HomePageClient() {
                   {whyChooseIcons[i]}
                 </div>
 
-                <h3
+                <h5
                   style={{
                     fontSize: '18px',
                     fontWeight: 700,
@@ -1173,7 +1351,7 @@ export default function HomePageClient() {
                   }}
                 >
                   {t(`whyChoose.items.${i}.title`)}
-                </h3>
+                </h5>
                 <p
                   style={{
                     fontSize: '14px',
@@ -1190,55 +1368,75 @@ export default function HomePageClient() {
       </section>
 
       {/* ============================================
-          11. GALLERY — Bento Grid
+          11. GALLERY — Tight Compact Grid
           ============================================ */}
-      <section className="section-spacing">
+      <section
+        style={{
+          paddingTop: 'var(--space-3xl)',
+          paddingBottom: 'var(--space-3xl)',
+          background: 'var(--surface)',
+        }}
+      >
         <div className="section-container">
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-            <h2
+            <span style={{ display: 'inline-block', background: 'var(--orange-pale)', color: 'var(--orange)', fontSize: '13px', fontWeight: 700, padding: '5px 16px', borderRadius: 'var(--radius-full)', marginBottom: 'var(--space-md)' }}>Real Customers</span>
+            <h3
               style={{
-                fontSize: 'clamp(24px, 3.5vw, 36px)',
+                fontSize: '32px',
                 fontWeight: 800,
                 color: 'var(--navy)',
-                letterSpacing: 'var(--tracking-tight)',
+                letterSpacing: '-0.02em',
                 marginBottom: 'var(--space-sm)',
               }}
             >
               {t('gallery.heading')}
-            </h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>
+            </h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '16px', maxWidth: '500px', margin: '0 auto' }}>
               {t('gallery.subheading')}
             </p>
           </div>
 
-          <div className="bento-grid fade-up">
-            {galleryImages.map((src, i) => (
+          <div className="gallery-grid fade-up">
+            {[
+              'https://static.wixstatic.com/media/d3104b_e316a4a91161459bb8480465cea5bea2~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_23e852bbc2014f68bf15ba24ed1985cc~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_b4447471360744dcad575e11b7ab844b~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_2886cdd04bdc4d219906b4ca405282b0~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_e4be4ee4a4f045e0ad6bc88914d85baa~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_a9a66ccdc948499babc488ba93cba1dc~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_3bb278b8f9df48058c905f941327117e~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_90288668fcea43789582d2f818832e9a~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_e316a4a91161459bb8480465cea5bea2~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_23e852bbc2014f68bf15ba24ed1985cc~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_b4447471360744dcad575e11b7ab844b~mv2.png',
+              'https://static.wixstatic.com/media/d3104b_2886cdd04bdc4d219906b4ca405282b0~mv2.png',
+            ].map((src, i) => (
               <div
                 key={i}
                 style={{
-                  position: 'relative',
-                  borderRadius: 'var(--radius-lg)',
+                  aspectRatio: '1',
+                  borderRadius: '12px',
                   overflow: 'hidden',
-                  minHeight: i === 0 ? '300px' : '200px',
-                  backgroundImage: `url(${src})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
+                  transition: 'transform 200ms ease',
+                  boxShadow: '0 2px 8px rgba(27,45,91,0.08)',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(27,45,91,0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(27,45,91,0.08)';
                 }}
               >
-                {/* Hover gradient overlay */}
-                <div
+                <img
+                  src={src}
+                  alt={`${t('gallery.heading')} ${i + 1}`}
                   style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(135deg, rgba(27,45,91,0) 0%, rgba(27,45,91,0) 100%)',
-                    transition: 'opacity 300ms cubic-bezier(0.16, 1, 0.3, 1)',
-                    borderRadius: 'var(--radius-lg)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, rgba(27,45,91,0.4) 0%, rgba(27,45,91,0.2) 100%)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, rgba(27,45,91,0) 0%, rgba(27,45,91,0) 100%)';
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
                   }}
                 />
               </div>
@@ -1248,27 +1446,26 @@ export default function HomePageClient() {
       </section>
 
       {/* ============================================
-          12. LOCATIONS ACCORDION — Grouped by Region
+          12. LOCATIONS — City Chip Grid by Region
           ============================================ */}
       <section
         id="locations"
-        className="section-spacing"
-        style={{ background: 'var(--surface)' }}
+        style={{ background: 'var(--surface)', padding: 'var(--space-2xl) 0' }}
       >
         <div className="section-container">
-          <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-            <h2
+          <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-lg)' }}>
+            <h3
               style={{
-                fontSize: 'clamp(24px, 3.5vw, 36px)',
+                fontSize: 'clamp(22px, 3vw, 32px)',
                 fontWeight: 800,
                 color: 'var(--navy)',
                 letterSpacing: 'var(--tracking-tight)',
-                marginBottom: 'var(--space-sm)',
+                marginBottom: 'var(--space-xs)',
               }}
             >
               {t('locations.heading')}
-            </h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>
+            </h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>
               {t('locations.subheading')}
             </p>
           </div>
@@ -1276,107 +1473,54 @@ export default function HomePageClient() {
           <div
             className="fade-up"
             style={{
-              maxWidth: '720px',
+              maxWidth: '900px',
               margin: '0 auto',
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--space-sm)',
+              gap: 'var(--space-md)',
             }}
           >
             {regionOrder.map((region) => {
-              const isOpen = openRegion === region;
               const regionLocs = locationsByRegion[region] || [];
               if (regionLocs.length === 0) return null;
 
               return (
-                <div
-                  key={region}
-                  style={{
-                    background: 'var(--white)',
-                    borderRadius: 'var(--radius-md)',
-                    boxShadow: 'var(--shadow-sm)',
-                    overflow: 'hidden',
-                    borderLeft: isOpen ? '4px solid var(--orange)' : '4px solid transparent',
-                    transition: 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)',
-                  }}
-                >
-                  <button
-                    onClick={() => setOpenRegion(isOpen ? null : region)}
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: 'var(--space-md) var(--space-lg)',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: 'var(--navy)',
-                      textAlign: 'left',
-                    }}
-                  >
-                    <span>{region} ({regionLocs.length})</span>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="var(--orange)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{
-                        transition: 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)',
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                      }}
-                    >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </button>
-
+                <div key={region}>
                   <div
-                    className={`accordion-content${isOpen ? ' open' : ''}`}
                     style={{
-                      maxHeight: isOpen ? `${regionLocs.length * 44 + 24}px` : '0',
+                      fontSize: '12px',
+                      fontWeight: 700,
+                      color: 'var(--navy)',
+                      marginBottom: '6px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
                     }}
                   >
-                    <div
-                      style={{
-                        padding: '0 var(--space-lg) var(--space-md)',
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 'var(--space-sm)',
-                      }}
-                    >
-                      {regionLocs.map((loc) => (
-                        <a
-                          key={loc.slug}
-                          href={`/${locale}/electric-wheelchair/${loc.slug}`}
-                          style={{
-                            display: 'inline-block',
-                            padding: '6px 14px',
-                            fontSize: '13px',
-                            fontWeight: 500,
-                            color: 'var(--navy-light)',
-                            background: 'var(--surface)',
-                            borderRadius: 'var(--radius-full)',
-                            transition: 'transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms cubic-bezier(0.16, 1, 0.3, 1)',
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background = 'var(--orange-pale)';
-                            e.currentTarget.style.color = 'var(--orange)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'var(--surface)';
-                            e.currentTarget.style.color = 'var(--navy-light)';
-                          }}
-                        >
-                          {loc.name}
-                        </a>
-                      ))}
-                    </div>
+                    {region}
+                  </div>
+                  <div className="loc-chips-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {regionLocs.map((loc) => (
+                      <a
+                        key={loc.slug}
+                        href={`/${locale}/electric-wheelchair/${loc.slug}`}
+                        className="loc-link"
+                        style={{
+                          display: 'inline-block',
+                          padding: '6px 14px',
+                          fontSize: '13px',
+                          fontWeight: 500,
+                          color: 'var(--navy)',
+                          background: 'var(--white)',
+                          border: '1.5px solid var(--navy)',
+                          borderRadius: 'var(--radius-full)',
+                          transition: 'transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--orange)'; e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--orange)'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--white)'; e.currentTarget.style.color = 'var(--navy)'; e.currentTarget.style.borderColor = 'var(--navy)'; }}
+                      >
+                        {loc.name}
+                      </a>
+                    ))}
                   </div>
                 </div>
               );
@@ -1391,7 +1535,7 @@ export default function HomePageClient() {
       <section id="faq" className="section-spacing">
         <div className="section-container">
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-            <h2
+            <h3
               style={{
                 fontSize: 'clamp(24px, 3.5vw, 36px)',
                 fontWeight: 800,
@@ -1400,7 +1544,7 @@ export default function HomePageClient() {
               }}
             >
               {t('faq.heading')}
-            </h2>
+            </h3>
           </div>
 
           <div
@@ -1444,7 +1588,7 @@ export default function HomePageClient() {
                       lineHeight: 'var(--leading-snug)',
                     }}
                   >
-                    <span>{t(`faq.items.${i}.question`)}</span>
+                    <h4 style={{ fontSize: 'inherit', fontWeight: 'inherit', color: 'inherit', lineHeight: 'inherit', margin: 0 }}>{t(`faq.items.${i}.question`)}</h4>
                     <svg
                       width="20"
                       height="20"
@@ -1488,6 +1632,40 @@ export default function HomePageClient() {
         </div>
       </section>
 
+      {/* Nearby Locations — location pages only */}
+      {isLocationPage && nearbyLocations && nearbyLocations.length > 0 && (
+        <section style={{ padding: 'var(--space-2xl) 0', background: 'var(--white)' }}>
+          <div className="section-container">
+            <h4 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--navy)', marginBottom: 'var(--space-md)', textAlign: 'center' }}>
+              {t('location.nearbyTitle')}
+            </h4>
+            <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px', marginBottom: 'var(--space-lg)' }}>
+              {t('location.nearbySubtitle')}
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
+              {nearbyLocations.map((loc) => (
+                <a
+                  key={loc.slug}
+                  href={`/${locale}/electric-wheelchair/${loc.slug}`}
+                  className="loc-link"
+                  style={{
+                    padding: '8px 20px',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    color: 'var(--navy)',
+                    background: 'var(--surface)',
+                    borderRadius: 'var(--radius-full)',
+                    border: '1px solid rgba(27,45,91,0.1)',
+                  }}
+                >
+                  {loc.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ============================================
           14. FINAL CTA
           ============================================ */}
@@ -1495,13 +1673,28 @@ export default function HomePageClient() {
         style={{
           background: 'var(--gradient-navy-dark)',
           padding: 'var(--space-4xl) 0',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
+        {/* Faded wheelchair background */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${productGallery[1]})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center right',
+            opacity: 0.05,
+            pointerEvents: 'none',
+          }}
+        />
         <div
           className="section-container fade-up"
-          style={{ textAlign: 'center' }}
+          style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}
         >
-          <h2
+          <h3
             style={{
               fontSize: 'clamp(28px, 4.5vw, 44px)',
               fontWeight: 800,
@@ -1512,7 +1705,7 @@ export default function HomePageClient() {
             }}
           >
             {t('finalCta.heading')}
-          </h2>
+          </h3>
           <p
             style={{
               color: 'rgba(255,255,255,0.8)',
@@ -1535,15 +1728,11 @@ export default function HomePageClient() {
             <WhatsAppIcon size={22} />
             {t('finalCta.cta')}
           </a>
-          <p
-            style={{
-              color: 'rgba(255,255,255,0.6)',
-              fontSize: '15px',
-              marginTop: 'var(--space-lg)',
-            }}
-          >
-            {t('finalCta.phone')}
-          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: 'var(--space-md)', justifyContent: 'center' }}>
+            {['Fast Response', 'Free Setup', 'Satisfaction Guaranteed'].map((tag) => (
+              <span key={tag} style={{ fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.6)', background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: 'var(--radius-full)' }}>✓ {tag}</span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1569,15 +1758,18 @@ export default function HomePageClient() {
           >
             {/* Brand */}
             <div>
-              <div
-                style={{
-                  fontSize: '20px',
-                  fontWeight: 800,
-                  color: 'var(--white)',
-                  marginBottom: 'var(--space-sm)',
-                }}
-              >
-                {t('footer.brandName')}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--space-sm)' }}>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="32" rx="6" fill="#1B2D5B"/>
+                  <circle cx="13" cy="22" r="5.5" stroke="#F47B20" strokeWidth="2" fill="none"/>
+                  <circle cx="13" cy="22" r="1.5" fill="#F47B20"/>
+                  <circle cx="15" cy="8" r="2.5" fill="#FFFFFF"/>
+                  <path d="M14 11v6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M14 17h6l2 5" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="22" cy="22" r="2.5" stroke="#F47B20" strokeWidth="1.5" fill="none"/>
+                  <path d="M24 5l-3 4h3l-3 4" stroke="#F47B20" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontWeight: 800, fontSize: '16px', color: 'var(--white)', letterSpacing: '-0.02em' }}>{t('footer.brandName')}</span>
               </div>
               <p style={{ fontSize: '14px', lineHeight: 'var(--leading-relaxed)', maxWidth: '300px' }}>
                 {t('footer.tagline')}
@@ -1586,7 +1778,7 @@ export default function HomePageClient() {
 
             {/* Quick links */}
             <div>
-              <div
+              <h6
                 style={{
                   fontSize: '14px',
                   fontWeight: 700,
@@ -1597,7 +1789,7 @@ export default function HomePageClient() {
                 }}
               >
                 {t('footer.quickLinks')}
-              </div>
+              </h6>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
                 {navLinks.map((link) => (
                   <a
@@ -1619,7 +1811,7 @@ export default function HomePageClient() {
 
             {/* Contact */}
             <div>
-              <div
+              <h6
                 style={{
                   fontSize: '14px',
                   fontWeight: 700,
@@ -1630,7 +1822,7 @@ export default function HomePageClient() {
                 }}
               >
                 {t('footer.contact')}
-              </div>
+              </h6>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
                 <a
                   href={waHref}
@@ -1646,7 +1838,7 @@ export default function HomePageClient() {
                   }}
                 >
                   <WhatsAppIcon size={16} />
-                  {t('finalCta.phone')}
+                  {t('nav.ctaButton')}
                 </a>
                 <span style={{ fontSize: '14px' }}>
                   electric-wheelchair.com.my
@@ -1703,6 +1895,9 @@ export default function HomePageClient() {
           .hero-card {
             max-width: 560px !important;
           }
+          .reviews-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
         }
 
         @media (max-width: 767px) {
@@ -1718,25 +1913,8 @@ export default function HomePageClient() {
           .step-line {
             display: none !important;
           }
-          .stagger-grid {
+          .reviews-grid {
             grid-template-columns: 1fr !important;
-          }
-          .stagger-grid > * {
-            transform: none !important;
-          }
-        }
-
-        /* Snap scroll card sizing */
-        @media (min-width: 768px) {
-          .snap-scroll-x > * {
-            width: calc(25% - 12px) !important;
-            min-width: 260px !important;
-          }
-        }
-        @media (max-width: 767px) {
-          .snap-scroll-x > * {
-            width: 85vw !important;
-            min-width: 260px !important;
           }
         }
       `}</style>

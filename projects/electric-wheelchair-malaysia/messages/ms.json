@@ -10,7 +10,8 @@
     "reviews": "Ulasan",
     "locations": "Lokasi",
     "faq": "Soalan Lazim",
-    "ctaButton": "WhatsApp Kami"
+    "blog": "Blog",
+    "ctaButton": "WhatsApp Sekarang"
   },
   "fomoBanner": {
     "texts": [
@@ -22,52 +23,51 @@
   },
   "hero": {
     "badge": "Paling Laris di Malaysia",
-    "h1": "Kerusi Roda Elektrik",
-    "h1Highlight": "Sewa & Jualan",
+    "h1": "Beli atau Sewa",
+    "h1Highlight": "Kerusi Roda Elektrik",
     "h1Suffix": "di Malaysia",
     "subheadline": "Ringan. Boleh dilipat. Berkuasa. Sewa dari RM400/bulan atau beli dari RM2,400. Penghantaran hari sama ke seluruh Malaysia.",
-    "ctaPrimary": "WhatsApp Kami Sekarang",
+    "ctaPrimary": "WhatsApp Sekarang",
     "ctaSecondary": "Lihat Produk",
     "trustBadge": "Bertauliah KKM • Waranti 6 Bulan • 2,300+ Pelanggan"
   },
   "stats": {
     "items": [
-      { "value": "2,300+", "label": "Pelanggan Dilayan" },
-      { "value": "Hari Sama", "label": "Penghantaran" },
-      { "value": "RM400", "label": "Sewa Bulanan" },
-      { "value": "4.9★", "label": "Rating Google" }
+      {
+        "value": "2,300+",
+        "label": "Pelanggan Dilayan"
+      },
+      {
+        "value": "Hari Sama",
+        "label": "Penghantaran"
+      },
+      {
+        "value": "RM400",
+        "label": "Sewa Bulanan"
+      },
+      {
+        "value": "4.9★",
+        "label": "Rating Google"
+      }
     ]
   },
   "products": {
     "heading": "Kerusi Roda Elektrik Kami",
-    "subheading": "Pilih sewa atau beli — semua model boleh dilipat, ringan, dan bertauliah KKM",
-    "items": {
-      "lightweight": {
-        "name": "Kerusi Roda Elektrik Ringan",
-        "description": "Sesuai untuk kegunaan harian dan perjalanan. Reka bentuk boleh dilipat muat dalam but kereta.",
-        "price": "Dari RM2,400",
-        "rental": "Sewa: RM400/bulan"
-      },
-      "reclining": {
-        "name": "Kerusi Roda Elektrik Rebah",
-        "description": "Boleh rebah sepenuhnya dengan sokongan kepala. Sesuai untuk keselesaan jangka panjang.",
-        "price": "Dari RM2,800",
-        "rental": "Sewa: RM450/bulan"
-      },
-      "heavyDuty": {
-        "name": "Kerusi Roda Elektrik Tugas Berat",
-        "description": "Menanggung sehingga 120kg. Rangka diperkukuh untuk pengguna lebih besar.",
-        "price": "Dari RM3,200",
-        "rental": "Sewa: RM500/bulan"
-      },
-      "travel": {
-        "name": "Kerusi Roda Elektrik Pelancongan",
-        "description": "Ultra-padat. Muat kabin kapal terbang. Sesuai untuk pelancong.",
-        "price": "Dari RM2,600",
-        "rental": "Sewa: RM420/bulan"
-      }
-    },
-    "cta": "Tanya Sekarang"
+    "subheading": "Kerusi roda elektrik boleh lipat, ringan, dan bertauliah KKM",
+    "name": "Kerusi Roda Elektrik Semua-Dalam-Satu",
+    "description": "Kerusi roda elektrik boleh lipat, ringan, dan boleh rebah untuk kegunaan di rumah, hospital, dan perjalanan. Kerusi roda bermotor kami padat, mesra perjalanan, dan mudah digunakan untuk warga emas atau pemulihan. Bertauliah KKM dengan waranti 6 bulan.",
+    "rrp": "RM 3,399",
+    "price": "RM 2,400",
+    "rental": "Dari RM400/bulan",
+    "saveLabel": "Jimat RM999!",
+    "features": [
+      "Bertauliah KKM",
+      "Waranti 6 Bulan",
+      "Boleh Lipat & Ringan",
+      "Penghantaran Hari Sama",
+      "98% Kadar Keselesaan"
+    ],
+    "cta": "WhatsApp Sekarang"
   },
   "howItWorks": {
     "heading": "Cara Pesanan",
@@ -97,12 +97,12 @@
       "Mencari penyelesaian mobiliti yang sesuai untuk perjalanan?"
     ],
     "solution": "Kerusi roda elektrik kami mengembalikan kebebasan — ringan, mudah dikawal, dan dihantar ke pintu anda.",
-    "cta": "Dapatkan Kerusi Roda Anda Hari Ini"
+    "cta": "WhatsApp Sekarang"
   },
   "midCta": {
     "heading": "Sedia Untuk Dapatkan Semula Mobiliti Anda?",
     "subheading": "WhatsApp kami sekarang untuk harga dan ketersediaan segera",
-    "cta": "WhatsApp Kami Sekarang"
+    "cta": "WhatsApp Sekarang"
   },
   "reviews": {
     "heading": "Apa Kata Rakyat Malaysia",
@@ -217,7 +217,7 @@
   "finalCta": {
     "heading": "Dapatkan Kerusi Roda Elektrik Anda Hari Ini",
     "subheading": "Sewa dari RM400/bulan atau beli dari RM2,400. Penghantaran hari sama ke seluruh Malaysia.",
-    "cta": "WhatsApp Kami Sekarang",
+    "cta": "WhatsApp Sekarang",
     "phone": "6010-888 9849"
   },
   "footer": {
@@ -225,11 +225,35 @@
     "tagline": "Penyedia sewa dan jualan kerusi roda elektrik dipercayai di Malaysia.",
     "quickLinks": "Pautan Pantas",
     "contact": "Hubungi",
-    "copyright": "© 2026 Kerusi Roda Elektrik Malaysia. Hak cipta terpelihara.",
-    "ssm": "Perniagaan Berdaftar SSM"
+    "copyright": "© 2026 Ibnu Sina Care Sdn. Bhd. Hak cipta terpelihara.",
+    "ssm": "Ibnu Sina Care Sdn. Bhd. — Berdaftar SSM"
+  },
+  "blog": {
+    "title": "Blog",
+    "metaTitle": "Blog | Kerusi Roda Elektrik Malaysia",
+    "metaDescription": "Baca artikel terkini tentang kerusi roda elektrik, tips mobiliti, dan panduan kerusi roda untuk rakyat Malaysia.",
+    "readMore": "Baca Lagi",
+    "recentPosts": "Siaran Terkini",
+    "publishedOn": "Diterbitkan pada",
+    "minRead": "min bacaan",
+    "backToBlog": "← Kembali ke Blog",
+    "noPosts": "Tiada catatan blog lagi. Sila semak semula nanti!",
+    "sharePre": "Kongsi artikel ini",
+    "breadcrumbHome": "Utama",
+    "breadcrumbBlog": "Blog"
+  },
+  "location": {
+    "h1Prefix": "Kerusi Roda Elektrik di",
+    "metaTitleSuffix": "| Sewa & Jualan | Kerusi Roda Elektrik Malaysia",
+    "metaDescPrefix": "Sewa atau beli kerusi roda elektrik di",
+    "metaDescSuffix": ". Penghantaran hari sama. Bertauliah KKM. Dari RM400/bulan. WhatsApp kami sekarang.",
+    "breadcrumbHome": "Utama",
+    "breadcrumbProduct": "Kerusi Roda Elektrik",
+    "nearbyTitle": "Kawasan Berdekatan",
+    "nearbySubtitle": "Kami juga menghantar ke bandar-bandar berdekatan ini"
   },
   "shared": {
-    "whatsappUs": "WhatsApp Kami",
+    "whatsappUs": "WhatsApp Sekarang",
     "learnMore": "Ketahui Lebih Lanjut",
     "viewAll": "Lihat Semua",
     "freeDelivery": "Penghantaran Percuma",

@@ -81,6 +81,20 @@ The `getPhoneNumber.ts` function resolves the website from the HTTP `host` heade
 - Always seed rows for the intended custom domain
 - Use the same phone numbers for both — just duplicate with different `website` values
 
+## Leads Mode System
+The `company_websites` table has a `leads_mode` column that controls how phone numbers are selected:
+
+| Mode | Behavior |
+|------|----------|
+| `single` | One default number → always returned |
+| `rotation` | Multiple numbers → weighted random by `percentage` |
+| `location` | Filter by `location_slug` → weighted random within that location. Falls back to `location_slug = 'all'` |
+| `hybrid` | Location pages → location numbers only. Other pages → `location_slug = 'all'` numbers only. Both use weighted random |
+
+When seeding a new website:
+1. Insert one row in `phone_numbers` with `type = 'default'`, `location_slug = 'all'`, `label = 'default'`, `percentage = 100`
+2. Ensure `company_websites` row exists with `leads_mode = 'single'` (default)
+
 ## Rules
 - Never expose Supabase service keys in client-side code
 - Always use the anon key for public reads

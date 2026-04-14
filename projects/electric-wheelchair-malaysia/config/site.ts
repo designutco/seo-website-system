@@ -1,6 +1,6 @@
 export const siteConfig = {
-  domain: 'electric-wheelchair.com.my',
-  siteUrl: 'https://www.electric-wheelchair.com.my',
+  domain: 'electric-wheelchair-malaysia.vercel.app',
+  siteUrl: 'https://electric-wheelchair-malaysia.vercel.app',
   brandName: 'Electric Wheelchair Malaysia',
   tagline: 'Electric Wheelchair Rental & Sales in Malaysia',
   productSlug: 'electric-wheelchair',
