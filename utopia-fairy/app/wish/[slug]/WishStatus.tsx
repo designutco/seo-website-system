@@ -27,7 +27,7 @@ export default function WishStatus({ slug }: { slug: string }) {
   const router = useRouter()
 
   const projectPath = `projects/${slug}/`
-  const claudeCommand = `claude "Read projects/${slug}/inputs.md and run the full agent pipeline following prompts/new-website.md. The project slug is ${slug}."`
+  const claudeCommand = `claude "Using @CLAUDE.md files, generate the ${slug} website. Read projects/${slug}/inputs.md for the project brief."`
 
   useEffect(() => {
     const interval = setInterval(() => {

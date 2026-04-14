@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { readFile } from 'fs/promises'
 import path from 'path'
+import { findLocalUrl } from '@/lib/detect-local'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   const slug = request.nextUrl.searchParams.get('slug')
@@ -12,26 +15,29 @@ export async function GET(request: NextRequest) {
   const repoRoot = path.resolve(process.cwd(), '..')
   const projectDir = path.join(repoRoot, 'projects', slug)
 
-  // Check for Vercel deploy URL (written by Layla after deployment)
+  // Check for Vercel deploy URL:
+  // 1. Try deploy-url.txt first (explicit)
+  // 2. Fall back to checking .vercel/project.json for Vercel project name
   let deployUrl: string | null = null
   try {
     deployUrl = (await readFile(path.join(projectDir, 'deploy-url.txt'), 'utf-8')).trim()
   } catch {
-    // Not deployed yet
+    try {
+      const vercelProject = JSON.parse(
+        await readFile(path.join(projectDir, '.vercel', 'project.json'), 'utf-8')
+      )
+      if (vercelProject.projectName) {
+        const candidateUrl = `https://${vercelProject.projectName}.vercel.app`
+        const res = await fetch(candidateUrl, { method: 'HEAD', redirect: 'manual', signal: AbortSignal.timeout(3000) }).catch(() => null)
+        if (res && (res.ok || res.status === 307 || res.status === 308)) {
+          deployUrl = candidateUrl
+        }
+      }
+    } catch { /* no vercel config */ }
   }
 
-  // Check for localhost URL (written by dev server or agent during build)
-  let localUrl: string | null = null
-  try {
-    localUrl = (await readFile(path.join(projectDir, 'local-url.txt'), 'utf-8')).trim()
-    // Verify localhost is actually reachable
-    const res = await fetch(localUrl, { method: 'HEAD', signal: AbortSignal.timeout(2000) }).catch(() => null)
-    if (!res || !res.ok) {
-      localUrl = null // Server not running, ignore stale file
-    }
-  } catch {
-    // No local URL file
-  }
+  // Find local URL with port scanning
+  const localUrl = await findLocalUrl(projectDir)
 
   return NextResponse.json({ deployUrl, localUrl })
 }

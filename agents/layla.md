@@ -42,6 +42,44 @@ Verify that the website's WhatsApp button is connected to the same Supabase data
 - `getPhoneNumber()` not rotating properly
 - WhatsApp button not using the database number
 
+### 1.5. Auto-seed phone number in Supabase (MANDATORY — before deploy)
+Before deploying, verify that at least one active phone number row exists in Supabase for the Vercel deployment domain. If none exists, **auto-insert it**.
+
+**Check:**
+```bash
+curl -s "SUPABASE_URL/rest/v1/phone_numbers?website=eq.VERCEL_DOMAIN&select=id" \
+  -H "apikey: SERVICE_KEY" -H "Authorization: Bearer SERVICE_KEY"
+```
+
+**If empty ([]), insert:**
+```bash
+curl -s -X POST "SUPABASE_URL/rest/v1/phone_numbers" \
+  -H "apikey: SERVICE_KEY" -H "Authorization: Bearer SERVICE_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "website": "VERCEL_DOMAIN",
+    "product_slug": "PRODUCT_SLUG",
+    "location_slug": "all",
+    "phone_number": "PHONE_FROM_SITE_CONFIG",
+    "label": "default",
+    "is_active": true,
+    "whatsapp_text": "Hi, saya berminat dengan PRODUCT_NAME. Boleh dapatkan maklumat lanjut?",
+    "percentage": 100
+  }'
+```
+
+Read `config/site.ts` for the domain, product slug, phone number, and brand name. The Vercel domain is the `domain` value in siteConfig.
+
+**This step is mandatory.** Never deploy without confirming phone numbers exist in Supabase. The WhatsApp redirect will fall back to a hardcoded number if no rows exist — which means no tracking.
+
+Also verify the `company_websites` table has a row for this domain with the correct `leads_mode`:
+- `single` — One default number for entire website
+- `rotation` — Multiple numbers, weighted random by percentage
+- `location` — Location-specific numbers with percentage rotation
+- `hybrid` — Location numbers + fallback "all" pool combined
+
+Default for new websites is `single`. The user chooses the mode during setup.
+
 ### 2. Push to GitHub
 After the user confirms the website is ready:
 

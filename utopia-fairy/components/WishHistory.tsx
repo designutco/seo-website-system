@@ -19,11 +19,16 @@ export default function WishHistory() {
   const pathname = usePathname()
 
   useEffect(() => {
-    fetch('/api/wishes')
-      .then(r => r.json())
-      .then(data => setWishes(data.wishes || []))
-      .catch(() => {})
-  }, [pathname]) // refetch when page changes
+    const fetchWishes = () => {
+      fetch('/api/wishes')
+        .then(r => r.json())
+        .then(data => setWishes(data.wishes || []))
+        .catch(() => {})
+    }
+    fetchWishes()
+    const interval = setInterval(fetchWishes, 15000)
+    return () => clearInterval(interval)
+  }, [pathname]) // refetch when page changes + poll every 15s
 
   const statusDot = (status: string) => {
     const colors: Record<string, string> = {

@@ -31,10 +31,13 @@ Step 4:  Kagura — UI design direction     (needs: Alpha + Nana's output + exis
 ── user confirms design ──
 
 Step 5:  Layla  — Integration test → GitHub push → Vercel deploy
+
+Step 6:  Hanabi — Blog writing (can run independently, anytime after deploy)
 ```
 
 Steps 2 agents (Cyclops + Sora) can run in parallel after Alpha.
 Step 4 agents (Kagura + Kimmy) can run in parallel after Nana.
+Hanabi can run at any time after the website is deployed — she is independent of the main pipeline.
 
 ## What to pass each agent
 
@@ -46,6 +49,7 @@ Step 4 agents (Kagura + Kimmy) can run in parallel after Nana.
 | Nana    | Alpha's doc, Sora's SEO plan, product description, brand tone, full locations list, supported locales |
 | Kagura  | Alpha's doc, Nana's homepage copy, brand assets, existing site screenshots, product type, target audience, reference images (if any) |
 | Kimmy   | Alpha's doc, Sora's plan, Nana's homepage copy, Nana's location copy, confirmed languages, domain, existing codebase state |
+| Hanabi  | Website domain, brand name, product niche, target languages, keyword list (optional), related websites for backlinks, Supabase credentials |
 | Layla   | Completed website project, Supabase credentials, GitHub repo URL, Vercel project details |
 
 ## Collecting outputs
