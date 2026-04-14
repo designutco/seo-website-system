@@ -1,9 +1,8 @@
-import { headers } from 'next/headers'
 import { supabase } from './supabase'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const WEBSITE       = 'serviceaircond.my'
+const WEBSITE       = 'service-aircond-malaysia.vercel.app'
 const PRODUCT_SLUG  = 'service-aircond'
 
 /**
@@ -37,17 +36,11 @@ function pickRandom<T>(arr: T[]): T | undefined {
 }
 
 /**
- * Resolve the effective website identifier from the request host header.
- * Falls back to the hardcoded constant so this works in tests / local dev
- * where there is no live HTTP request.
+ * Always use the canonical WEBSITE constant so DB lookups match regardless
+ * of the request host (localhost, Vercel preview, custom domain, etc.).
  */
 async function resolveWebsite(): Promise<string> {
-  try {
-    const host = (await headers()).get('host')
-    return host ?? WEBSITE
-  } catch {
-    return WEBSITE
-  }
+  return WEBSITE
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
