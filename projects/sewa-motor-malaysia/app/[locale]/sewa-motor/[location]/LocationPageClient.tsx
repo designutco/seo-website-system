@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
-import { locations, footerLocations } from '@/config/locations'
+import { useTranslations } from 'next-intl'
 import { products } from '@/config/products'
+import { locations, footerLocations } from '@/config/locations'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import Link from 'next/link'
 
 /* ── SVG Icons ── */
 const WAIcon = () => (
@@ -106,7 +107,6 @@ function FadeSection({ children, className = '', delay = 0, full = false }: { ch
 
 /* ── FOMO Banner ── */
 function FomoBanner() {
-  const locale = useLocale()
   const fomoT = useTranslations('fomo')
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
   const [slotsLeft, setSlotsLeft] = useState(3)
@@ -130,7 +130,7 @@ function FomoBanner() {
         <span className="fomo-dot w-2 h-2 rounded-full bg-white shrink-0" />
         <span className="font-medium">{fomoT('message', { slots: slotsLeft })}</span>
         <span className="font-mono font-semibold px-2 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.25)' }}>{pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}</span>
-        <a href={waRedirect(locale)} className="font-semibold underline underline-offset-2 hover:no-underline shrink-0">{fomoT('bookNow')} &rarr;</a>
+        <a href="#" className="font-semibold underline underline-offset-2 hover:no-underline shrink-0">{fomoT('bookNow')} &rarr;</a>
       </div>
     </div>
   )
@@ -152,6 +152,7 @@ function AccordionItem({ title, children, defaultOpen = false }: { title: string
   )
 }
 
+/* ── FAQ Accordion ── */
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
   return (
@@ -168,19 +169,33 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 /* ══════════════════════════════════════════
-   HOMEPAGE
+   LOCATION PAGE CLIENT
    ══════════════════════════════════════════ */
-export default function HomePage() {
-  const locale = useLocale()
-  const t = useTranslations('home')
+interface LocationPageClientProps {
+  locale: string
+  locationSlug: string
+  displayName: string
+  state: string
+  nearbyLocations: { slug: string; displayName: string; state: string }[]
+}
+
+export default function LocationPageClient({
+  locale,
+  locationSlug,
+  displayName,
+  state,
+  nearbyLocations,
+}: LocationPageClientProps) {
+  const t = useTranslations('location')
+  const tProducts = useTranslations('home.products')
+  const tHome = useTranslations('home')
   const nav = useTranslations('nav')
   const footer = useTranslations('footer')
   const s = useTranslations('shared')
-  const fomo = useTranslations('fomo')
 
-  const WA_LINK = waRedirect(locale)
+  const WA_LINK = waRedirect(locale, `Hi, I want to rent a motorcycle in ${displayName}. Please quote me.`, locationSlug)
 
-  // Group locations by state
+  // Group locations by state (same as homepage)
   const stateGroups = locations.reduce<Record<string, typeof locations>>((acc, loc) => {
     if (!acc[loc.state]) acc[loc.state] = []
     acc[loc.state].push(loc)
@@ -189,9 +204,9 @@ export default function HomePage() {
   const stateNames = Object.keys(stateGroups).sort()
 
   const reviews = [
-    { text: t('reviews.review1'), author: t('reviews.review1Author'), location: t('reviews.review1Location') },
-    { text: t('reviews.review2'), author: t('reviews.review2Author'), location: t('reviews.review2Location') },
-    { text: t('reviews.review3'), author: t('reviews.review3Author'), location: t('reviews.review3Location') },
+    { text: 'Rented a Honda Vario 160 for a month and it was in perfect condition. Same-day delivery as promised. Will definitely rent again.', author: 'Ahmad R.', location: 'Petaling Jaya' },
+    { text: 'I needed a motorbike urgently for food delivery work. Sewa Motor delivered a Yamaha Y15ZR to my place the same day I messaged them on WhatsApp. Very reliable.', author: 'Wei Liang C.', location: 'Kuala Lumpur' },
+    { text: 'Budget-friendly and hassle-free. I rented the Modenas Kriss MR3 at RM30/day while my own bike was in the workshop. Great service and friendly team.', author: 'Priya S.', location: 'Shah Alam' },
     { text: 'Saya sewa Honda Wave 125 untuk seminggu. Harga sangat berbaloi dan motor dalam keadaan baik. Highly recommend untuk sesiapa yang perlukan motor sementara.', author: 'Faizal M.', location: 'Ipoh' },
     { text: 'Tourist here. Rented the NMax for a week to explore Penang. The bike was clean, well-maintained, and delivered right to my Airbnb. Best way to explore the island!', author: 'Sarah K.', location: 'Penang' },
     { text: 'Grab rider here. My bike was in the workshop so I rented the Vario 160 for 2 weeks. Smooth ride, fuel-efficient, and the rental cost was way less than losing income.', author: 'Rizal A.', location: 'Johor Bahru' },
@@ -205,7 +220,7 @@ export default function HomePage() {
       {/* ── NAV ── */}
       <header className="sticky top-0 z-50" style={{ background: 'var(--brand-dark)', boxShadow: '0 2px 12px rgba(22,33,62,0.2)' }}>
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <a href={`/${locale}`} className="flex items-center gap-2.5" aria-label="Sewa Motor Malaysia homepage">
+          <Link href={`/${locale}`} className="flex items-center gap-2.5" aria-label="Sewa Motor Malaysia homepage">
             <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'var(--brand-primary)' }}>
               <MotorcycleIcon />
             </div>
@@ -213,7 +228,7 @@ export default function HomePage() {
               <div className="text-sm font-bold text-white leading-tight">Sewa Motor</div>
               <div className="text-[11px] font-normal" style={{ color: 'rgba(255,255,255,0.45)' }}>sewamotor.my</div>
             </div>
-          </a>
+          </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             {[{ label: nav('products'), href: '#products' }, { label: nav('locations'), href: '#locations' }].map(link => (
               <a key={link.href} href={link.href} className="nav-link focus:outline-none">{link.label}</a>
@@ -228,6 +243,19 @@ export default function HomePage() {
         </div>
       </header>
 
+      {/* ── BREADCRUMBS ── */}
+      <nav className="max-w-6xl mx-auto px-6 py-3" aria-label="Breadcrumb">
+        <ol className="flex items-center gap-2 text-xs font-medium" style={{ color: 'var(--brand-text-muted)' }}>
+          <li>
+            <Link href={`/${locale}`} className="hover:underline" style={{ color: 'var(--brand-primary)' }}>
+              {t('breadcrumbs.home')}
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li style={{ color: 'var(--brand-dark)' }}>{displayName}</li>
+        </ol>
+      </nav>
+
       <main>
         {/* ── HERO ── */}
         <section className="relative overflow-hidden" aria-label="Hero">
@@ -238,22 +266,27 @@ export default function HomePage() {
               {/* Text */}
               <div className="pb-8 md:pb-16">
                 <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide text-white" style={{ background: 'rgba(255,107,53,0.2)', border: '1px solid rgba(255,107,53,0.3)' }}>Same-Day Delivery</span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>128 Cities</span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide text-white" style={{ background: 'rgba(255,107,53,0.2)', border: '1px solid rgba(255,107,53,0.3)' }}>
+                    {t('badges.sameDayDelivery', { city: displayName })}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                    {t('badges.affordable')}
+                  </span>
                 </div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4" style={{ letterSpacing: '-0.03em', lineHeight: '1.1' }}>
-                  Motor Rental Malaysia —{' '}
-                  <span className="gradient-text">Sewa Motor from RM30/day</span>
+                  {t('hero.headline', { city: displayName })}
                 </h1>
-                <p className="text-sm md:text-base font-normal mb-6" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: '1.75' }}>{t('hero.subheadline')}</p>
+                <p className="text-sm md:text-base font-normal mb-6" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: '1.75' }}>
+                  {t('hero.intro', { city: displayName })}
+                </p>
                 <a href={WA_LINK} className="wa-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-base font-bold text-white" style={{ background: 'var(--wa-green)' }}>
-                  <WAIcon />{t('hero.cta')}
+                  <WAIcon />{t('cta.button', { city: displayName })}
                 </a>
                 <p className="text-[11px] mt-3 font-normal" style={{ color: 'rgba(255,255,255,0.4)' }}>{s('freeToAsk')}</p>
               </div>
               {/* Hero image */}
               <div className="relative flex justify-center md:justify-end">
-                <img src="https://static.wixstatic.com/media/d3104b_9219aed8e59e4a0d9ee86be2066ff532~mv2.png" alt="Motorcycle rental Malaysia" className="w-64 sm:w-72 md:w-[360px] lg:w-[420px]" style={{ display: 'block', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))', marginBottom: '-40px' }} />
+                <img src="https://static.wixstatic.com/media/d3104b_9219aed8e59e4a0d9ee86be2066ff532~mv2.png" alt={`Motorcycle rental ${displayName}`} className="w-64 sm:w-72 md:w-[360px] lg:w-[420px]" style={{ display: 'block', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))', marginBottom: '-40px' }} />
                 {/* Parallelogram price stamp */}
                 <div className="absolute top-4 right-0 md:right-4 px-4 py-2 z-10" style={{ background: 'var(--brand-primary)', transform: 'skewX(-6deg)', boxShadow: '0 4px 16px rgba(255,107,53,0.35)' }}>
                   <div style={{ transform: 'skewX(6deg)' }} className="text-center">
@@ -302,7 +335,12 @@ export default function HomePage() {
             <FadeSection>
               <div className="text-center mb-10">
                 <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>Motorcycles & Pricing</span>
-                <h2 id="products-heading" className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>{t('products.heading')}</h2>
+                <h2 id="products-heading" className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>
+                  {t('banner.heading', { city: displayName })}
+                </h2>
+                <p className="text-sm font-normal mt-2" style={{ color: 'var(--brand-text-muted)' }}>
+                  {t('banner.description', { city: displayName })}
+                </p>
               </div>
             </FadeSection>
             <div className="grid md:grid-cols-3 gap-5">
@@ -312,26 +350,26 @@ export default function HomePage() {
                   <FadeSection key={pk.id} delay={i * 60} full>
                     <div className="product-card h-full flex flex-col">
                       <div className="relative p-4 flex items-center justify-center" style={{ background: 'var(--brand-primary-xs)', minHeight: '140px' }}>
-                        <img src={pk.image} alt={t(`products.${pk.key}.name`)} className="h-28 object-contain" />
+                        <img src={pk.image} alt={tProducts(`${pk.key}.name` as any)} className="h-28 object-contain" />
                         {p.badge && (
                           <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide text-white" style={{ background: p.badge === 'badgeMostPopular' ? 'var(--brand-primary-dark)' : p.badge === 'badgeBestValue' ? 'var(--brand-primary)' : 'var(--brand-dark)' }}>
-                            {t(`products.${p.badge}`)}
+                            {tProducts(p.badge as any)}
                           </span>
                         )}
                       </div>
                       <div className="p-5 flex flex-col flex-1">
-                        <h3 className="text-base font-bold mb-1" style={{ color: 'var(--brand-dark)' }}>{t(`products.${pk.key}.name`)}</h3>
-                        <p className="text-xs font-normal mb-4 flex-1" style={{ color: 'var(--brand-text-muted)', lineHeight: '1.6' }}>{t(`products.${pk.key}.description`)}</p>
+                        <h3 className="text-base font-bold mb-1" style={{ color: 'var(--brand-dark)' }}>{tProducts(`${pk.key}.name` as any)}</h3>
+                        <p className="text-xs font-normal mb-4 flex-1" style={{ color: 'var(--brand-text-muted)', lineHeight: '1.6' }}>{tProducts(`${pk.key}.description` as any)}</p>
                         <div className="grid grid-cols-3 gap-2 mb-4">
                           {(['daily', 'weekly', 'monthly'] as const).map(period => (
                             <div key={period} className="px-2 py-2 rounded-lg text-center" style={{ background: 'var(--brand-primary-xs)' }}>
-                              <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--brand-text-muted)' }}>{t(`products.${period}`)}</div>
-                              <div className="text-sm font-extrabold" style={{ color: 'var(--brand-dark)' }}>{t(`products.${pk.key}.${period}`)}</div>
+                              <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--brand-text-muted)' }}>{tProducts(period as any)}</div>
+                              <div className="text-sm font-extrabold" style={{ color: 'var(--brand-dark)' }}>{tProducts(`${pk.key}.${period}` as any)}</div>
                             </div>
                           ))}
                         </div>
-                        <a href={waRedirect(locale, pk.waMsg)} className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-90 w-full" style={{ background: 'var(--brand-primary)' }}>
-                          <WAIcon />{t('products.cta')}
+                        <a href={waRedirect(locale, pk.waMsg + ' Location: ' + displayName, locationSlug)} className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-90 w-full" style={{ background: 'var(--brand-primary)' }}>
+                          <WAIcon />{tProducts('cta')}
                         </a>
                       </div>
                     </div>
@@ -348,7 +386,7 @@ export default function HomePage() {
             <FadeSection>
               <div className="text-center mb-10">
                 <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>Simple Process</span>
-                <h2 className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>{t('howItWorks.heading')}</h2>
+                <h2 className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>{tHome('howItWorks.heading')}</h2>
               </div>
             </FadeSection>
             <div className="grid md:grid-cols-3 gap-6">
@@ -356,8 +394,8 @@ export default function HomePage() {
                 <FadeSection key={n} delay={i * 100} full>
                   <div className="text-center p-6 h-full">
                     <div className="text-4xl font-extrabold mb-3 gradient-text">0{n}</div>
-                    <h3 className="text-base font-bold mb-2" style={{ color: 'var(--brand-dark)' }}>{t(`howItWorks.step${n}Title`)}</h3>
-                    <p className="text-sm font-normal" style={{ color: 'var(--brand-text-muted)', lineHeight: '1.7' }}>{t(`howItWorks.step${n}Desc`)}</p>
+                    <h3 className="text-base font-bold mb-2" style={{ color: 'var(--brand-dark)' }}>{tHome(`howItWorks.step${n}Title` as any)}</h3>
+                    <p className="text-sm font-normal" style={{ color: 'var(--brand-text-muted)', lineHeight: '1.7' }}>{tHome(`howItWorks.step${n}Desc` as any)}</p>
                   </div>
                 </FadeSection>
               ))}
@@ -369,11 +407,11 @@ export default function HomePage() {
         <section className="py-16 px-6" style={{ background: 'var(--brand-surface)' }}>
           <div className="max-w-3xl mx-auto">
             <FadeSection>
-              <h2 className="text-xl md:text-2xl font-bold mb-6" style={{ color: 'var(--brand-dark)' }}>{t('risk.heading')}</h2>
+              <h2 className="text-xl md:text-2xl font-bold mb-6" style={{ color: 'var(--brand-dark)' }}>{tHome('risk.heading')}</h2>
               <div className="space-y-4 text-sm font-normal" style={{ color: 'var(--brand-text-muted)', lineHeight: '1.8' }}>
-                <p>{t('risk.paragraph1')}</p>
-                <p>{t('risk.paragraph2')}</p>
-                <p className="font-semibold" style={{ color: 'var(--brand-dark)' }}>{t('risk.paragraph3')}</p>
+                <p>{tHome('risk.paragraph1')}</p>
+                <p>{tHome('risk.paragraph2')}</p>
+                <p className="font-semibold" style={{ color: 'var(--brand-dark)' }}>{tHome('risk.paragraph3')}</p>
               </div>
             </FadeSection>
           </div>
@@ -407,7 +445,7 @@ export default function HomePage() {
                   <span className="text-3xl font-extrabold" style={{ color: 'var(--brand-primary)' }}>4.9</span>
                   <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <GoogleStarIcon key={i} />)}</div>
                 </div>
-                <h2 id="reviews-heading" className="text-2xl md:text-3xl font-bold text-white">{t('reviews.heading')}</h2>
+                <h2 id="reviews-heading" className="text-2xl md:text-3xl font-bold text-white">{t('cta.heading', { city: displayName })}</h2>
                 <p className="text-xs font-normal mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>{s('reviewsSubtext')}</p>
               </div>
             </FadeSection>
@@ -441,16 +479,18 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto">
             <FadeSection>
               <div className="text-center mb-10">
-                <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>Why Sewa Motor</span>
-                <h2 className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>{t('authority.heading')}</h2>
+                <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>{displayName}</span>
+                <h2 className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>
+                  {t('whyChoose.heading', { city: displayName })}
+                </h2>
               </div>
             </FadeSection>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                { title: s('whyChoose.title1'), desc: s('whyChoose.desc1') },
-                { title: s('whyChoose.title2'), desc: s('whyChoose.desc2') },
-                { title: s('whyChoose.title3'), desc: s('whyChoose.desc3') },
-                { title: s('whyChoose.title4'), desc: s('whyChoose.desc4') },
+                { title: s('whyChoose.title1'), desc: t('whyChoose.fleet', { city: displayName }) },
+                { title: s('whyChoose.title2'), desc: t('whyChoose.delivery', { city: displayName }) },
+                { title: s('whyChoose.title3'), desc: t('whyChoose.affordable', { city: displayName }) },
+                { title: s('whyChoose.title4'), desc: t('whyChoose.support', { city: displayName }) },
               ].map((item, i) => (
                 <FadeSection key={i} delay={i * 80} full>
                   <div className="h-full">
@@ -484,21 +524,21 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── LOCATIONS ── */}
+        {/* ── LOCATIONS ACCORDION ── */}
         <section id="locations" className="py-16 px-6" style={{ background: '#fff' }} aria-labelledby="locations-heading">
           <div className="max-w-4xl mx-auto">
             <FadeSection>
               <div className="text-center mb-10">
                 <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>Service Coverage</span>
-                <h2 id="locations-heading" className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>{t('locations.heading')}</h2>
-                <p className="text-sm font-normal mt-2" style={{ color: 'var(--brand-text-muted)' }}>{t('locations.subheading')}</p>
+                <h2 id="locations-heading" className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>{tHome('locations.heading')}</h2>
+                <p className="text-sm font-normal mt-2" style={{ color: 'var(--brand-text-muted)' }}>{tHome('locations.subheading')}</p>
               </div>
             </FadeSection>
             <div>
-              {stateNames.map((state, i) => (
-                <AccordionItem key={state} title={`${state} (${stateGroups[state].length} cities)`} defaultOpen={i === 0}>
+              {stateNames.map((st, i) => (
+                <AccordionItem key={st} title={`${st} (${stateGroups[st].length} cities)`} defaultOpen={st === state}>
                   <div className="flex flex-wrap gap-2">
-                    {stateGroups[state].map(loc => (
+                    {stateGroups[st].map(loc => (
                       <a key={loc.slug} href={`/${locale}/sewa-motor/${loc.slug}`} className="px-3 py-1.5 rounded-lg text-xs font-medium hover:opacity-80 transition-opacity" style={{ background: 'var(--brand-primary-xs)', color: 'var(--brand-primary)' }}>
                         {loc.displayName}
                       </a>
@@ -515,27 +555,69 @@ export default function HomePage() {
           <div className="max-w-3xl mx-auto">
             <FadeSection>
               <div className="text-center mb-10">
-                <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>Common Questions</span>
-                <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>Frequently Asked Questions</h2>
+                <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>FAQ</span>
+                <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold mt-2" style={{ color: 'var(--brand-dark)' }}>
+                  {t('faq.heading', { city: displayName })}
+                </h2>
               </div>
             </FadeSection>
             <div className="bg-white rounded-xl p-6" style={{ border: '1px solid var(--brand-border)' }}>
               {Array.from({ length: 10 }).map((_, i) => {
                 const n = i + 1
-                return <FAQItem key={n} q={t(`faq.q${n}` as any)} a={t(`faq.a${n}` as any)} />
+                return (
+                  <FAQItem
+                    key={n}
+                    q={t(`faq.q${n}` as any, { city: displayName })}
+                    a={t(`faq.a${n}` as any, { city: displayName })}
+                  />
+                )
               })}
             </div>
           </div>
         </section>
 
+        {/* ── NEARBY LOCATIONS ── */}
+        {nearbyLocations.length > 0 && (
+          <section className="py-16 px-6" style={{ background: '#fff' }}>
+            <div className="max-w-4xl mx-auto">
+              <FadeSection>
+                <div className="text-center mb-8">
+                  <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-primary)' }}>{t('nearby.heading')}</span>
+                  <p className="text-sm font-normal mt-2" style={{ color: 'var(--brand-text-muted)' }}>
+                    {t('nearby.description', { city: displayName })}
+                  </p>
+                </div>
+              </FadeSection>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                {nearbyLocations.map((nearby, i) => (
+                  <FadeSection key={nearby.slug} delay={i * 60}>
+                    <Link
+                      href={`/${locale}/sewa-motor/${nearby.slug}`}
+                      className="block p-4 rounded-xl text-center hover:scale-[1.02] transition-transform"
+                      style={{ background: '#fff', border: '1px solid var(--brand-border)' }}
+                    >
+                      <div className="text-sm font-bold mb-1" style={{ color: 'var(--brand-dark)' }}>{nearby.displayName}</div>
+                      <div className="text-[11px] font-normal" style={{ color: 'var(--brand-text-muted)' }}>{nearby.state}</div>
+                    </Link>
+                  </FadeSection>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* ── FINAL CTA ── */}
         <section className="py-16 px-6" style={{ background: 'var(--brand-dark)' }}>
           <div className="max-w-3xl mx-auto text-center">
             <FadeSection>
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">{t('cta.heading')}</h2>
-              <p className="text-sm font-normal mb-6" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: '1.7' }}>{t('cta.subheading')}</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                {t('cta.heading', { city: displayName })}
+              </h2>
+              <p className="text-sm font-normal mb-6" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: '1.7' }}>
+                {t('cta.subheading', { city: displayName })}
+              </p>
               <a href={WA_LINK} className="wa-btn inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-lg font-bold text-white" style={{ background: 'var(--wa-green)' }}>
-                <WAIcon />{t('cta.button')}
+                <WAIcon />{t('cta.button', { city: displayName })}
               </a>
               <p className="text-[11px] mt-4 font-normal" style={{ color: 'rgba(255,255,255,0.4)' }}>Response within 1 hour · No hidden charges · 7 days a week</p>
             </FadeSection>
@@ -558,7 +640,7 @@ export default function HomePage() {
           <div>
             <h4 className="text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>{footer('quickLinks')}</h4>
             <div className="space-y-2">
-              <a href={`/${locale}`} className="block text-xs text-white hover:opacity-80">{footer('home')}</a>
+              <Link href={`/${locale}`} className="block text-xs text-white hover:opacity-80">{footer('home')}</Link>
               <a href="#products" className="block text-xs text-white hover:opacity-80">{footer('products')}</a>
               <a href="#locations" className="block text-xs text-white hover:opacity-80">{footer('locations')}</a>
             </div>
@@ -567,7 +649,7 @@ export default function HomePage() {
             <h4 className="text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>{footer('topLocations')}</h4>
             <div className="space-y-2">
               {footerLocations.map(loc => (
-                <a key={loc.slug} href={`/${locale}/sewa-motor/${loc.slug}`} className="block text-xs text-white hover:opacity-80">{loc.displayName}</a>
+                <Link key={loc.slug} href={`/${locale}/sewa-motor/${loc.slug}`} className="block text-xs text-white hover:opacity-80">{loc.displayName}</Link>
               ))}
             </div>
           </div>

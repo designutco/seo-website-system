@@ -87,3 +87,16 @@ The `getPhoneNumber.ts` function resolves the website from the HTTP `host` heade
 - Always provide a fallback phone number (from siteConfig) when Supabase returns null
 - Design for multi-tenancy from day one
 - Always verify `product_slug` matches the code constant before marking seed data as complete
+
+## Schema Consistency Rules (MANDATORY)
+The `lib/getPhoneNumber.ts` query columns MUST exactly match the actual Supabase table schema. Past mistakes to avoid:
+
+1. **Column name**: The column is `website` (NOT `website_slug`). Always verify the real column name by querying the table before writing code.
+2. **Default location_slug**: The global fallback uses `location_slug = 'all'` (NOT `null`). The fallback query must use `.eq('location_slug', 'all')` not `.is('location_slug', null)`.
+3. **Website value**: Use the actual deployed domain (e.g. `sewa-motor-malaysia.vercel.app`) not a made-up slug (e.g. `sewamotor-my`). Always check existing rows in the database to match the convention.
+4. **Fallback phone**: The `FALLBACK_PHONE` constant must use the real phone number from the database, not a placeholder like `60123456789`.
+
+**Before writing `getPhoneNumber.ts`, always:**
+- Query the actual `phone_numbers` table to see the real column names and values
+- Match the code constants to existing data exactly
+- Test the query with `curl` against the Supabase REST API to confirm it returns results

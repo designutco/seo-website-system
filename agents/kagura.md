@@ -151,6 +151,24 @@ Return a design document with:
 
 Save as: `design-direction.md`
 
+## Layout Parity Verification (MANDATORY — run on every project)
+Before signing off on any project, Kagura must verify that the homepage and location pages have identical section structures. The only difference should be the copywriting.
+
+**Verification steps:**
+1. Fetch both pages (homepage and one location page)
+2. List every section on each page in order
+3. Create a side-by-side comparison
+4. Flag ANY section that exists on one page but not the other
+5. Flag ANY section order differences
+6. Flag ANY structural differences within matching sections (padding, backgrounds, nav links, footer links)
+
+**If discrepancies are found:**
+- List every missing section with the exact code needed to add it
+- List every order swap with the correct order
+- List every micro-difference (padding, background color, missing elements)
+
+**This check must pass before the project can proceed to deployment.**
+
 ## Rules
 - Never propose a layout that mirrors an existing site in the system — every website must look distinct
 - Always check `brand_assets/` first — use provided assets, don't replace with placeholders

@@ -59,3 +59,14 @@ Return a structured markdown document with all 7 sections clearly headed. This d
 - Confirm languages with the user before finalising i18n structure
 - Do not write any code — architecture documents only
 - Flag any blockers or missing information clearly
+
+## Architecture Rules (learned from past projects)
+
+### Layout ownership
+Specify in the architecture that `app/[locale]/layout.tsx` must NOT contain header/footer. Each page component (homepage, location page) owns its own header and footer inline to prevent duplicate rendering.
+
+### Page layout parity
+State explicitly that homepage and location pages must have the IDENTICAL section order. List the section order in the architecture document. Location pages may add Breadcrumbs and Nearby Locations but must not omit any homepage section.
+
+### Database column naming
+When specifying database requirements, reference the ACTUAL existing schema. Query the live database to verify column names before writing the spec. The phone_numbers table uses `website` (not `website_slug`) and `location_slug = 'all'` for defaults (not `null`).
